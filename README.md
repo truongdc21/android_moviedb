@@ -21,4 +21,3 @@ An application Movie with MVVM Architecture used UI Tookit Jetpack compose + XML
 - Logger: Timber, Chucker, OkHttp logging interceptor.
 - App performance : LeakCanary
 
-![mvvm](https://github.com/truongdc-study/android_base_mvvm_jetpack_compose/assets/104975435/f82ec41c-0d5e-4b14-b244-e600d884a914)
