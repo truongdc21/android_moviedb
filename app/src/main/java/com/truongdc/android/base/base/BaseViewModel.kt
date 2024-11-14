@@ -2,7 +2,7 @@ package com.truongdc.android.base.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.truongdc.android.base.ui.components.state.UiStateDelegate
+import com.truongdc.android.base.base.state.UiStateDelegate
 import com.truongdc.android.base.data.remote.error.ErrorResponse
 import com.truongdc.android.base.data.base.DataResult
 import kotlinx.coroutines.CoroutineScope

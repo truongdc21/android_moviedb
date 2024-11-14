@@ -3,7 +3,7 @@ package com.truongdc.android.base.data.remote.error
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.truongdc.android.base.data.remote.provides.MoshiBuilderProvider
-import com.truongdc.android.base.utils.logs.LogUtils
+import com.truongdc.android.base.common.logs.LogUtils
 import retrofit2.HttpException
 import java.io.IOException
 import java.text.ParseException

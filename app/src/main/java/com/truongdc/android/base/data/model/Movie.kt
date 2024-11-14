@@ -1,4 +1,4 @@
-package com.truongdc.android.base.model
+package com.truongdc.android.base.data.model
 
 import android.os.Parcelable
 import com.squareup.moshi.Json

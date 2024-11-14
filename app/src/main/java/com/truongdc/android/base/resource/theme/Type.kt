@@ -1,4 +1,4 @@
-package com.truongdc.android.base.ui.theme
+package com.truongdc.android.base.resource.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

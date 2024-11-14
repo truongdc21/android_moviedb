@@ -7,7 +7,7 @@ import com.truongdc.android.base.data.base.ExecuteResult
 import com.truongdc.android.base.data.remote.reponses.MoviePagingSource
 import com.truongdc.android.base.data.repository.MovieRepository
 import com.truongdc.android.base.di.annotations.IoDispatcher
-import com.truongdc.android.base.utils.Constants
+import com.truongdc.android.base.common.constant.Constants
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 

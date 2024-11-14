@@ -1,4 +1,4 @@
-package com.truongdc.android.base.ui.theme
+package com.truongdc.android.base.resource.theme
 
 import android.app.Activity
 import android.os.Build

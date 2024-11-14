@@ -1,4 +1,4 @@
-package com.truongdc.android.base.utils.extensions
+package com.truongdc.android.base.common.extensions
 
 import android.content.Context
 import android.widget.Toast

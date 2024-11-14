@@ -23,10 +23,10 @@ import androidx.navigation.NavHostController
 import com.truongdc.android.base.R
 import com.truongdc.android.base.navigation.AppDestination
 import com.truongdc.android.base.navigation.navigate
-import com.truongdc.android.base.ui.theme.AppColors
-import com.truongdc.android.base.ui.theme.DpSize
-import com.truongdc.android.base.ui.theme.DpSize.dp30
-import com.truongdc.android.base.ui.theme.SpSize.sp18
+import com.truongdc.android.base.resource.theme.AppColors
+import com.truongdc.android.base.resource.dimens.DpSize
+import com.truongdc.android.base.resource.dimens.DpSize.dp30
+import com.truongdc.android.base.resource.dimens.SpSize.sp18
 import kotlinx.coroutines.delay
 
 @Composable

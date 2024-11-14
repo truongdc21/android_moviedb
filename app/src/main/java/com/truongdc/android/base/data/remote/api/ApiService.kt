@@ -1,6 +1,6 @@
 package com.truongdc.android.base.data.remote.api
 
-import com.truongdc.android.base.model.Movie
+import com.truongdc.android.base.data.model.Movie
 import com.truongdc.android.base.data.remote.reponses.BaseResponse
 import retrofit2.http.GET
 import retrofit2.http.Path

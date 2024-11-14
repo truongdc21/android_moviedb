@@ -2,8 +2,8 @@ package com.truongdc.android.base.ui.screens.login
 
 import androidx.lifecycle.viewModelScope
 import com.truongdc.android.base.base.BaseViewModel
-import com.truongdc.android.base.ui.components.state.UiStateDelegate
-import com.truongdc.android.base.ui.components.state.UiStateDelegateImpl
+import com.truongdc.android.base.base.state.UiStateDelegate
+import com.truongdc.android.base.base.state.UiStateDelegateImpl
 import com.truongdc.android.base.data.local.datastores.PreferencesDataStore
 import com.truongdc.android.base.data.local.datastores.UserDataStore
 import dagger.hilt.android.lifecycle.HiltViewModel

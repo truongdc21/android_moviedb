@@ -2,18 +2,19 @@ package com.truongdc.android.base.data.remote.reponses
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.truongdc.android.base.utils.Constants
+import com.truongdc.android.base.data.model.Movie
+import com.truongdc.android.base.common.constant.Constants
 import retrofit2.HttpException
 import java.io.IOException
 
 class MoviePagingSource(
     private val movieRemoteSource : com.truongdc.android.base.data.MovieDataSource.Remote
-): PagingSource<Int, com.truongdc.android.base.model.Movie>(){
-    override fun getRefreshKey(state: PagingState<Int, com.truongdc.android.base.model.Movie>): Int? {
+): PagingSource<Int, Movie>(){
+    override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
         return state.anchorPosition
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, com.truongdc.android.base.model.Movie> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         return try {
             val currentPage = params.key ?: 1
             val movies = movieRemoteSource.getMovies(

@@ -1,6 +1,6 @@
 package com.truongdc.android.base.data.base
 
-import com.truongdc.android.base.utils.logs.LogUtils
+import com.truongdc.android.base.common.logs.LogUtils
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.withContext
