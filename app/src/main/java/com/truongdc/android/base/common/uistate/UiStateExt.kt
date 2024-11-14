@@ -1,4 +1,4 @@
-package com.truongdc.android.base.utils.uistate
+package com.truongdc.android.base.common.uistate
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -8,7 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import com.truongdc.android.base.ui.components.state.UiStateDelegate
+import com.truongdc.android.base.base.state.UiStateDelegate
 import com.truongdc.android.base.data.remote.error.ErrorResponse
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest

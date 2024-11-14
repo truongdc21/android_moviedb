@@ -9,12 +9,11 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
-import com.truongdc.android.base.ui.theme.AppColors
-import com.truongdc.android.base.ui.theme.DpSize
-import com.truongdc.android.base.ui.theme.SpSize
+import com.truongdc.android.base.resource.theme.AppColors
+import com.truongdc.android.base.resource.dimens.DpSize
+import com.truongdc.android.base.resource.dimens.SpSize
 
 @Composable
 fun BaseButton(

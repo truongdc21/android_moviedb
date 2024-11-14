@@ -1,4 +1,4 @@
-package com.truongdc.android.base.model
+package com.truongdc.android.base.data.model
 
 data class User(
     val name: String,

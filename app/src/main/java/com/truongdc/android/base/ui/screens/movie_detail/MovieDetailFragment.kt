@@ -1,20 +1,19 @@
 package com.truongdc.android.base.ui.screens.movie_detail
 
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.truongdc.android.base.base.BaseFragment
 import com.truongdc.android.base.databinding.FragmentMovieDetailBinding
-import com.truongdc.android.base.utils.uistate.collectError
-import com.truongdc.android.base.utils.uistate.collectErrorResponse
-import com.truongdc.android.base.utils.uistate.collectEvent
-import com.truongdc.android.base.utils.uistate.collectLoading
-import com.truongdc.android.base.utils.uistate.render
-import com.truongdc.android.base.utils.uistate.uiStateDiffRender
-import com.truongdc.android.base.utils.extensions.loadImageCircleWithUrl
-import com.truongdc.android.base.utils.extensions.loadImageWithUrl
-import com.truongdc.android.base.utils.extensions.showToast
+import com.truongdc.android.base.common.uistate.collectError
+import com.truongdc.android.base.common.uistate.collectErrorResponse
+import com.truongdc.android.base.common.uistate.collectEvent
+import com.truongdc.android.base.common.uistate.collectLoading
+import com.truongdc.android.base.common.uistate.render
+import com.truongdc.android.base.common.uistate.uiStateDiffRender
+import com.truongdc.android.base.common.extensions.loadImageCircleWithUrl
+import com.truongdc.android.base.common.extensions.loadImageWithUrl
+import com.truongdc.android.base.common.extensions.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 

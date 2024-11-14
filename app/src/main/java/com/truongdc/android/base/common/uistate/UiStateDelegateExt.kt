@@ -1,4 +1,4 @@
-package com.truongdc.android.base.utils.uistate
+package com.truongdc.android.base.common.uistate
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -6,7 +6,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import com.truongdc.android.base.ui.components.state.UiStateDelegate
+import com.truongdc.android.base.base.state.UiStateDelegate
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.truongdc.android.base.data.remote.error.ErrorResponse

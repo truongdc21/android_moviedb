@@ -1,4 +1,4 @@
-package com.truongdc.android.base.utils
+package com.truongdc.android.base.common.constant
 
 object Constants {
     const val BASE_URL_IMAGE = "https://image.tmdb.org/t/p/w500"

@@ -3,8 +3,8 @@ package com.truongdc.android.base.data.remote
 import com.truongdc.android.base.data.MovieDataSource
 import com.truongdc.android.base.data.remote.api.ApiService
 import com.truongdc.android.base.data.remote.reponses.BaseResponse
-import com.truongdc.android.base.model.Movie
-import com.truongdc.android.base.utils.Constants
+import com.truongdc.android.base.data.model.Movie
+import com.truongdc.android.base.common.constant.Constants
 
 class MovieRemoteImpl(private val apiService: ApiService) : MovieDataSource.Remote {
 

@@ -33,13 +33,13 @@ import com.truongdc.android.base.ui.components.LoadingContent
 import com.truongdc.android.base.ui.components.ObserverKeyBoard
 import com.truongdc.android.base.navigation.AppDestination
 import com.truongdc.android.base.navigation.navigate
-import com.truongdc.android.base.ui.theme.AppColors
-import com.truongdc.android.base.ui.theme.DpSize
-import com.truongdc.android.base.ui.theme.SpSize
-import com.truongdc.android.base.utils.extensions.showToast
-import com.truongdc.android.base.utils.uistate.collectEvent
-import com.truongdc.android.base.utils.uistate.collectLoadingWithLifecycle
-import com.truongdc.android.base.utils.uistate.collectWithLifecycle
+import com.truongdc.android.base.resource.theme.AppColors
+import com.truongdc.android.base.resource.dimens.DpSize
+import com.truongdc.android.base.resource.dimens.SpSize
+import com.truongdc.android.base.common.extensions.showToast
+import com.truongdc.android.base.common.uistate.collectEvent
+import com.truongdc.android.base.common.uistate.collectLoadingWithLifecycle
+import com.truongdc.android.base.common.uistate.collectWithLifecycle
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

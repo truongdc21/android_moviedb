@@ -2,10 +2,10 @@ package com.truongdc.android.base.ui.screens.register
 
 import androidx.lifecycle.viewModelScope
 import com.truongdc.android.base.base.BaseViewModel
-import com.truongdc.android.base.ui.components.state.UiStateDelegate
-import com.truongdc.android.base.ui.components.state.UiStateDelegateImpl
+import com.truongdc.android.base.base.state.UiStateDelegate
+import com.truongdc.android.base.base.state.UiStateDelegateImpl
 import com.truongdc.android.base.data.local.datastores.UserDataStore
-import com.truongdc.android.base.model.User
+import com.truongdc.android.base.data.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

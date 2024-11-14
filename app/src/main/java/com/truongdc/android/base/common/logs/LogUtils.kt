@@ -1,4 +1,4 @@
-package com.truongdc.android.base.utils.logs
+package com.truongdc.android.base.common.logs
 
 import com.truongdc.android.base.BuildConfig
 import timber.log.Timber

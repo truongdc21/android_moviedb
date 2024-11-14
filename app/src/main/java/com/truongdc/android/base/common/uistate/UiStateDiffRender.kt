@@ -1,4 +1,4 @@
-package com.truongdc.android.base.utils.uistate
+package com.truongdc.android.base.common.uistate
 
 /**
  * UiStateDiffRender for efficient ui updates.

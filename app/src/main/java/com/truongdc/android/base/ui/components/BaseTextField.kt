@@ -13,8 +13,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import com.truongdc.android.base.ui.theme.AppColors
-import com.truongdc.android.base.ui.theme.SpSize
+import com.truongdc.android.base.resource.theme.AppColors
+import com.truongdc.android.base.resource.dimens.SpSize
 
 @Composable
 fun BaseTextField(

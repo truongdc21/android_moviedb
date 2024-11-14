@@ -15,9 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import com.truongdc.android.base.R
-import com.truongdc.android.base.ui.theme.DpSize
+import com.truongdc.android.base.resource.dimens.DpSize
 
 @Composable
 fun PageLoader(modifier: Modifier = Modifier) {

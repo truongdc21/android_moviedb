@@ -1,7 +1,6 @@
 package com.truongdc.android.base.data
 
-import androidx.paging.PagingSource
-import com.truongdc.android.base.model.Movie
+import com.truongdc.android.base.data.model.Movie
 import com.truongdc.android.base.data.remote.reponses.BaseResponse
 
 interface MovieDataSource {

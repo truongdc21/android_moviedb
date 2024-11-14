@@ -15,7 +15,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -33,14 +32,14 @@ import com.truongdc.android.base.ui.components.LoadingContent
 import com.truongdc.android.base.ui.components.ObserverKeyBoard
 import com.truongdc.android.base.navigation.AppDestination
 import com.truongdc.android.base.navigation.navigate
-import com.truongdc.android.base.ui.theme.AppColors
-import com.truongdc.android.base.ui.theme.DpSize
-import com.truongdc.android.base.ui.theme.SpSize
-import com.truongdc.android.base.utils.extensions.showToast
-import com.truongdc.android.base.utils.uistate.collectEvent
-import com.truongdc.android.base.utils.uistate.collectLoadingWithLifecycle
-import com.truongdc.android.base.utils.uistate.collectWithLifecycle
-import com.truongdc.android.base.model.User
+import com.truongdc.android.base.resource.theme.AppColors
+import com.truongdc.android.base.resource.dimens.DpSize
+import com.truongdc.android.base.resource.dimens.SpSize
+import com.truongdc.android.base.common.extensions.showToast
+import com.truongdc.android.base.common.uistate.collectEvent
+import com.truongdc.android.base.common.uistate.collectLoadingWithLifecycle
+import com.truongdc.android.base.common.uistate.collectWithLifecycle
+import com.truongdc.android.base.data.model.User
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

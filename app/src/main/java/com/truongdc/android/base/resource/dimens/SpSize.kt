@@ -1,4 +1,4 @@
-package com.truongdc.android.base.ui.theme
+package com.truongdc.android.base.resource.dimens
 
 import androidx.compose.ui.unit.sp
 

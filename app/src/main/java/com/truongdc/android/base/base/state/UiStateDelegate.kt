@@ -1,4 +1,4 @@
-package com.truongdc.android.base.ui.components.state
+package com.truongdc.android.base.base.state
 
 import com.truongdc.android.base.data.remote.error.ErrorResponse
 import kotlinx.coroutines.CoroutineScope

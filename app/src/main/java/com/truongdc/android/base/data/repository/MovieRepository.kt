@@ -1,7 +1,7 @@
 package com.truongdc.android.base.data.repository
 
 import androidx.paging.PagingData
-import com.truongdc.android.base.model.Movie
+import com.truongdc.android.base.data.model.Movie
 import com.truongdc.android.base.data.base.DataResult
 import kotlinx.coroutines.flow.Flow
 
