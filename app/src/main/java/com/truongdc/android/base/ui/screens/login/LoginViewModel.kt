@@ -15,10 +15,9 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val userDataStore: UserDataStore,
     private val preferencesDataStore: PreferencesDataStore
-) : BaseViewModel(),
-    UiStateDelegate<LoginViewModel.UiState, LoginViewModel.Event> by UiStateDelegateImpl(
-        UiState()
-    ) {
+) : BaseViewModel<LoginViewModel.UiState, LoginViewModel.Event>(
+    UiStateDelegateImpl(UiState())
+) {
     data class UiState(
         val email: String = "",
         val pass: String = "",

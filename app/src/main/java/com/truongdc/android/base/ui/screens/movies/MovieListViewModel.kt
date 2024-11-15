@@ -1,13 +1,12 @@
-package com.truongdc.android.base.ui.screens.movie
+package com.truongdc.android.base.ui.screens.movies
 
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.truongdc.android.base.base.BaseViewModel
-import com.truongdc.android.base.base.state.UiStateDelegate
 import com.truongdc.android.base.base.state.UiStateDelegateImpl
+import com.truongdc.android.base.data.local.datastores.PreferencesDataStore
 import com.truongdc.android.base.data.model.Movie
 import com.truongdc.android.base.data.repository.MovieRepository
-import com.truongdc.android.base.data.local.datastores.PreferencesDataStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -18,10 +17,9 @@ import javax.inject.Inject
 class MovieListViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
     private val preferencesDataStore: PreferencesDataStore
-) : BaseViewModel(),
-    UiStateDelegate<MovieListViewModel.UiState, MovieListViewModel.Event> by UiStateDelegateImpl(
-        UiState()
-    ) {
+) : BaseViewModel<MovieListViewModel.UiState, MovieListViewModel.Event>(
+    uiStateDelegate = UiStateDelegateImpl(UiState())
+) {
 
     data class UiState(
         val flowPagingMovie: Flow<PagingData<Movie>>? = null

@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.truongdc.android.base.base.ScreenContent
 import com.truongdc.android.base.ui.components.BaseButton
 import com.truongdc.android.base.ui.components.BaseTextField
 import com.truongdc.android.base.ui.components.LoadingContent
@@ -36,27 +37,21 @@ import com.truongdc.android.base.resource.theme.AppColors
 import com.truongdc.android.base.resource.dimens.DpSize
 import com.truongdc.android.base.resource.dimens.SpSize
 import com.truongdc.android.base.common.extensions.showToast
-import com.truongdc.android.base.common.uistate.collectEvent
-import com.truongdc.android.base.common.uistate.collectLoadingWithLifecycle
-import com.truongdc.android.base.common.uistate.collectWithLifecycle
+import com.truongdc.android.base.base.uistate.collectEvent
+import com.truongdc.android.base.base.uistate.collectLoadingWithLifecycle
+import com.truongdc.android.base.base.uistate.collectWithLifecycle
 import com.truongdc.android.base.data.model.User
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RegisterScreen(
     navHostController: NavHostController = rememberNavController(),
     viewModel: RegisterViewModel = hiltViewModel()
 ) {
-    val view = LocalView.current
     val context = LocalContext.current
-    val lifecycle = LocalLifecycleOwner.current
-    val uiState by viewModel.collectWithLifecycle()
-    val isLoading by viewModel.collectLoadingWithLifecycle()
-    view.ObserverKeyBoard { isShow ->
-        viewModel.onUpdateTextFiledFocus(isShow)
-    }
-    LaunchedEffect(key1 = Unit) {
-        viewModel.collectEvent(lifecycle) { event ->
+    ScreenContent(
+        viewModel = viewModel,
+        modifier = Modifier,
+        onEventEffect = { event ->
             when (event) {
                 RegisterViewModel.Event.RegisterSuccess -> {
                     context.showToast("Register Success!")
@@ -69,9 +64,8 @@ fun RegisterScreen(
                     context.showToast("Register Failed, Please try again!")
                 }
             }
-        }
-    }
-    LoadingContent(isLoading = isLoading) {
+        }) { uiState ->
+        LocalView.current.ObserverKeyBoard { viewModel.onUpdateTextFiledFocus(it) }
         Column(
             modifier = Modifier
                 .background(AppColors.Yellow)

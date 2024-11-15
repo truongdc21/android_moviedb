@@ -1,4 +1,4 @@
-package com.truongdc.android.base.common.uistate
+package com.truongdc.android.base.base.uistate
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
