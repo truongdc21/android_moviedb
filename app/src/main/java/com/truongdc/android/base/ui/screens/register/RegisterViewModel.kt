@@ -1,8 +1,7 @@
 package com.truongdc.android.base.ui.screens.register
 
 import androidx.lifecycle.viewModelScope
-import com.truongdc.android.base.base.BaseViewModel
-import com.truongdc.android.base.base.state.UiStateDelegate
+import com.truongdc.android.base.base.UiStateViewModel
 import com.truongdc.android.base.base.state.UiStateDelegateImpl
 import com.truongdc.android.base.data.local.datastores.UserDataStore
 import com.truongdc.android.base.data.model.User
@@ -14,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val userDataStore: UserDataStore,
-) : BaseViewModel<RegisterViewModel.UiState, RegisterViewModel.Event>(
+) : UiStateViewModel<RegisterViewModel.UiState, RegisterViewModel.Event>(
     UiStateDelegateImpl(UiState())
 ) {
     data class UiState(

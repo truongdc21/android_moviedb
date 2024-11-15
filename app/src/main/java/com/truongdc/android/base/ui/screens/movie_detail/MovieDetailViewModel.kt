@@ -1,8 +1,7 @@
 package com.truongdc.android.base.ui.screens.movie_detail
 
 import androidx.lifecycle.viewModelScope
-import com.truongdc.android.base.base.BaseViewModel
-import com.truongdc.android.base.base.state.UiStateDelegate
+import com.truongdc.android.base.base.UiStateViewModel
 import com.truongdc.android.base.base.state.UiStateDelegateImpl
 import com.truongdc.android.base.data.model.Movie
 import com.truongdc.android.base.data.repository.MovieRepository
@@ -13,7 +12,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieDetailViewModel @Inject constructor(
     private val movieRepository: MovieRepository
-) : BaseViewModel<MovieDetailViewModel.UiState, MovieDetailViewModel.Event>(
+) : UiStateViewModel<MovieDetailViewModel.UiState, MovieDetailViewModel.Event>(
     UiStateDelegateImpl(
         UiState()
     )
