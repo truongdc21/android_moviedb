@@ -13,10 +13,11 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieDetailViewModel @Inject constructor(
     private val movieRepository: MovieRepository
-) : BaseViewModel(),
-    UiStateDelegate<MovieDetailViewModel.UiState, MovieDetailViewModel.Event> by UiStateDelegateImpl(
+) : BaseViewModel<MovieDetailViewModel.UiState, MovieDetailViewModel.Event>(
+    UiStateDelegateImpl(
         UiState()
-    ) {
+    )
+) {
 
     data class UiState(
         val movie: Movie? = null

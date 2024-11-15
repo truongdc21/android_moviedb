@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.truongdc.android.base.base.ScreenContent
 import com.truongdc.android.base.ui.components.BaseButton
 import com.truongdc.android.base.ui.components.BaseTextField
 import com.truongdc.android.base.ui.components.LoadingContent
@@ -37,42 +38,33 @@ import com.truongdc.android.base.resource.theme.AppColors
 import com.truongdc.android.base.resource.dimens.DpSize
 import com.truongdc.android.base.resource.dimens.SpSize
 import com.truongdc.android.base.common.extensions.showToast
-import com.truongdc.android.base.common.uistate.collectEvent
-import com.truongdc.android.base.common.uistate.collectLoadingWithLifecycle
-import com.truongdc.android.base.common.uistate.collectWithLifecycle
+import com.truongdc.android.base.base.uistate.collectEvent
+import com.truongdc.android.base.base.uistate.collectLoadingWithLifecycle
+import com.truongdc.android.base.base.uistate.collectWithLifecycle
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LoginScreen(
     navHostController: NavHostController = rememberNavController(),
     viewModel: LoginViewModel = hiltViewModel()
 ) {
-    val view = LocalView.current
     val context = LocalContext.current
-    val lifecycle = LocalLifecycleOwner.current
-    val uiState by viewModel.collectWithLifecycle()
-    val isLoading by viewModel.collectLoadingWithLifecycle()
+    val view = LocalView.current
     val keyboardController = LocalSoftwareKeyboardController.current
-    view.ObserverKeyBoard { isShow ->
-        viewModel.onUpdateTextFiledFocus(isShow)
-    }
-    LaunchedEffect(key1 = Unit) {
-        viewModel.collectEvent(lifecycle) { event ->
-            when (event) {
-                LoginViewModel.Event.LoginSuccess -> {
-                    context.showToast("Login Success!")
-                    navHostController.navigate(AppDestination.MovieList) {
-                        popUpTo(AppDestination.Login.route) { inclusive = true }
-                    }
-                }
-
-                LoginViewModel.Event.LoginFailed -> {
-                    context.showToast("Login Failed, Please try again!")
+    view.ObserverKeyBoard { viewModel.onUpdateTextFiledFocus(it) }
+    ScreenContent(viewModel = viewModel, modifier = Modifier, onEventEffect = { event ->
+        when (event) {
+            LoginViewModel.Event.LoginSuccess -> {
+                context.showToast("Login Success!")
+                navHostController.navigate(AppDestination.MovieList) {
+                    popUpTo(AppDestination.Login.route) { inclusive = true }
                 }
             }
+
+            LoginViewModel.Event.LoginFailed -> {
+                context.showToast("Login Failed, Please try again!")
+            }
         }
-    }
-    LoadingContent(isLoading = isLoading) {
+    }, content = { uiState ->
         Column(
             modifier = Modifier
                 .background(AppColors.Yellow)
@@ -139,14 +131,6 @@ fun LoginScreen(
                     },
             )
         }
-    }
-}
+    })
 
-@Composable
-@Preview(
-    showSystemUi = true,
-    showBackground = true
-)
-private fun Preview() {
-    LoginScreen()
 }

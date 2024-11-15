@@ -14,10 +14,9 @@ import javax.inject.Inject
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val userDataStore: UserDataStore,
-) : BaseViewModel(),
-    UiStateDelegate<RegisterViewModel.UiState, RegisterViewModel.Event> by UiStateDelegateImpl(
-        UiState()
-    ) {
+) : BaseViewModel<RegisterViewModel.UiState, RegisterViewModel.Event>(
+    UiStateDelegateImpl(UiState())
+) {
     data class UiState(
         val name: String = "",
         val email: String = "",

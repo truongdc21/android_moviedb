@@ -8,8 +8,11 @@ import com.truongdc.android.base.data.base.DataResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-abstract class BaseViewModel : ViewModel() {
-    fun <T> UiStateDelegate<*, *>.launchTaskSync(
+abstract class BaseViewModel<UiState, Event>(
+    uiStateDelegate: UiStateDelegate<UiState, Event>,
+) : ViewModel(), UiStateDelegate<UiState, Event> by uiStateDelegate {
+
+    fun <T> launchTaskSync(
         isLoading: Boolean = false,
         onRequest: suspend CoroutineScope.() -> DataResult<T>,
         onSuccess: (T) -> Unit = {},
