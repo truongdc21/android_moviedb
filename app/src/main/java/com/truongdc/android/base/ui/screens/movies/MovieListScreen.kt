@@ -31,7 +31,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.truongdc.android.base.R
-import com.truongdc.android.base.base.ScreenContent
+import com.truongdc.android.base.base.compose.UiStateContent
 import com.truongdc.android.base.common.extensions.showToast
 import com.truongdc.android.base.navigation.AppDestination
 import com.truongdc.android.base.navigation.navigate
@@ -51,7 +51,7 @@ fun MovieListScreen(
     viewModel: MovieListViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
-    ScreenContent(
+    UiStateContent(
         viewModel = viewModel,
         modifier = Modifier,
         onEventEffect = { event ->

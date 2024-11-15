@@ -1,8 +1,7 @@
 package com.truongdc.android.base.ui.screens.login
 
 import androidx.lifecycle.viewModelScope
-import com.truongdc.android.base.base.BaseViewModel
-import com.truongdc.android.base.base.state.UiStateDelegate
+import com.truongdc.android.base.base.UiStateViewModel
 import com.truongdc.android.base.base.state.UiStateDelegateImpl
 import com.truongdc.android.base.data.local.datastores.PreferencesDataStore
 import com.truongdc.android.base.data.local.datastores.UserDataStore
@@ -15,7 +14,7 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val userDataStore: UserDataStore,
     private val preferencesDataStore: PreferencesDataStore
-) : BaseViewModel<LoginViewModel.UiState, LoginViewModel.Event>(
+) : UiStateViewModel<LoginViewModel.UiState, LoginViewModel.Event>(
     UiStateDelegateImpl(UiState())
 ) {
     data class UiState(
