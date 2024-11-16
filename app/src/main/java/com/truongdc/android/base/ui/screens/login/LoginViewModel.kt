@@ -5,6 +5,7 @@ import com.truongdc.android.base.base.UiStateViewModel
 import com.truongdc.android.base.base.state.UiStateDelegateImpl
 import com.truongdc.android.base.data.local.datastores.PreferencesDataStore
 import com.truongdc.android.base.data.local.datastores.UserDataStore
+import com.truongdc.android.base.navigation.AppDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -13,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val userDataStore: UserDataStore,
-    private val preferencesDataStore: PreferencesDataStore
+    private val preferencesDataStore: PreferencesDataStore,
 ) : UiStateViewModel<LoginViewModel.UiState, LoginViewModel.Event>(
     UiStateDelegateImpl(UiState())
 ) {
@@ -66,5 +67,17 @@ class LoginViewModel @Inject constructor(
                 hideLoading()
             }
         }
+    }
+
+    fun navigateRegister() {
+        navigator.navigateTo(AppDestination.Register())
+    }
+
+    fun navigateMovies() {
+        navigator.navigateTo(
+            route = AppDestination.MovieList(),
+            popUpToRoute = AppDestination.Splash.route,
+            isInclusive = true,
+        )
     }
 }

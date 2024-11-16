@@ -20,23 +20,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.truongdc.android.base.base.compose.UiStateContent
+import com.truongdc.android.base.common.extensions.showToast
+import com.truongdc.android.base.data.model.User
+import com.truongdc.android.base.resource.dimens.DpSize
+import com.truongdc.android.base.resource.dimens.SpSize
+import com.truongdc.android.base.resource.theme.AppColors
 import com.truongdc.android.base.ui.components.BaseButton
 import com.truongdc.android.base.ui.components.BaseTextField
 import com.truongdc.android.base.ui.components.ObserverKeyBoard
-import com.truongdc.android.base.navigation.AppDestination
-import com.truongdc.android.base.navigation.navigate
-import com.truongdc.android.base.resource.theme.AppColors
-import com.truongdc.android.base.resource.dimens.DpSize
-import com.truongdc.android.base.resource.dimens.SpSize
-import com.truongdc.android.base.common.extensions.showToast
-import com.truongdc.android.base.data.model.User
 
 @Composable
 fun RegisterScreen(
-    navHostController: NavHostController = rememberNavController(),
     viewModel: RegisterViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -47,9 +42,7 @@ fun RegisterScreen(
             when (event) {
                 RegisterViewModel.Event.RegisterSuccess -> {
                     context.showToast("Register Success!")
-                    navHostController.navigate(AppDestination.Up) {
-                        popUpTo(AppDestination.Login.route) { inclusive = true }
-                    }
+                    viewModel.navigateBack()
                 }
 
                 RegisterViewModel.Event.RegisterFailed -> {
@@ -111,9 +104,7 @@ fun RegisterScreen(
                     .padding(bottom = DpSize.dp30)
                     .pointerInput(Unit) {
                         detectTapGestures(onTap = {
-                            navHostController.navigate(AppDestination.Up) {
-                                popUpTo(AppDestination.Login.route) { inclusive = true }
-                            }
+                            viewModel.navigateBack()
                         })
                     },
             )

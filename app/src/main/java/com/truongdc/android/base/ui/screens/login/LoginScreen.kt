@@ -23,19 +23,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.truongdc.android.base.base.compose.UiStateContent
+import com.truongdc.android.base.common.extensions.showToast
+import com.truongdc.android.base.resource.dimens.DpSize
+import com.truongdc.android.base.resource.dimens.SpSize
+import com.truongdc.android.base.resource.theme.AppColors
 import com.truongdc.android.base.ui.components.BaseButton
 import com.truongdc.android.base.ui.components.BaseTextField
 import com.truongdc.android.base.ui.components.ObserverKeyBoard
-import com.truongdc.android.base.navigation.AppDestination
-import com.truongdc.android.base.navigation.navigate
-import com.truongdc.android.base.resource.theme.AppColors
-import com.truongdc.android.base.resource.dimens.DpSize
-import com.truongdc.android.base.resource.dimens.SpSize
-import com.truongdc.android.base.common.extensions.showToast
 
 @Composable
 fun LoginScreen(
-    navHostController: NavHostController = rememberNavController(),
     viewModel: LoginViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -46,9 +43,7 @@ fun LoginScreen(
         when (event) {
             LoginViewModel.Event.LoginSuccess -> {
                 context.showToast("Login Success!")
-                navHostController.navigate(AppDestination.MovieList) {
-                    popUpTo(AppDestination.Login.route) { inclusive = true }
-                }
+                viewModel.navigateMovies()
             }
 
             LoginViewModel.Event.LoginFailed -> {
@@ -115,9 +110,7 @@ fun LoginScreen(
                     .padding(bottom = DpSize.dp30)
                     .pointerInput(Unit) {
                         detectTapGestures(onTap = {
-                            navHostController.navigate(AppDestination.Register) {
-                                popUpTo(AppDestination.Splash.route) { inclusive = true }
-                            }
+                            viewModel.navigateRegister()
                         })
                     },
             )

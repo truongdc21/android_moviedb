@@ -1,8 +1,6 @@
 package com.truongdc.android.base.ui.screens.movies
 
 //noinspection UsingMaterialAndMaterial3Libraries
-import android.annotation.SuppressLint
-import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -17,7 +15,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -26,28 +23,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.truongdc.android.base.R
 import com.truongdc.android.base.base.compose.UiStateContent
 import com.truongdc.android.base.common.extensions.showToast
-import com.truongdc.android.base.navigation.AppDestination
-import com.truongdc.android.base.navigation.navigate
 import com.truongdc.android.base.resource.dimens.DpSize
 import com.truongdc.android.base.resource.dimens.SpSize
 import com.truongdc.android.base.resource.theme.AppColors
 import com.truongdc.android.base.ui.components.ErrorMessage
 import com.truongdc.android.base.ui.components.LoadingNextPageItem
 import com.truongdc.android.base.ui.components.PageLoader
-import com.truongdc.android.base.ui.screens.movie_detail.MovieDetailActivity
 import com.truongdc.android.base.ui.screens.movies.components.MovieItem
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MovieListScreen(
-    navHostController: NavHostController = rememberNavController(),
     viewModel: MovieListViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -58,9 +48,7 @@ fun MovieListScreen(
             when (event) {
                 is MovieListViewModel.Event.LogOutSuccess -> {
                     context.showToast("Logout Success!")
-                    navHostController.navigate(AppDestination.Splash) {
-                        popUpTo(AppDestination.MovieList.route) { inclusive = true }
-                    }
+                    viewModel.popToSplash()
                 }
 
                 is MovieListViewModel.Event.LogOutFailed -> {
@@ -75,16 +63,16 @@ fun MovieListScreen(
                     }
                 }
             ) {
-                LaunchedEffect(key1 = Unit) { viewModel.requestMovie() }
                 uiState.flowPagingMovie?.let { pagingData ->
                     val pagingItems = pagingData.collectAsLazyPagingItems()
                     LazyColumn(modifier = Modifier.padding(it)) {
                         item { Spacer(modifier = Modifier.padding(5.dp)) }
                         items(pagingItems.itemCount) { index ->
                             MovieItem(movie = pagingItems[index]!!, onClickItem = { movieId ->
-                                val intent = Intent(context, MovieDetailActivity::class.java)
+                                /*val intent = Intent(context, MovieDetailActivity::class.java)
                                 intent.putExtra("MOVIE_ID", movieId)
-                                context.startActivity(intent)
+                                context.startActivity(intent)*/
+                                viewModel.navigateToMovieDetail(movieId.toString())
                             })
                         }
                         pagingItems.apply {

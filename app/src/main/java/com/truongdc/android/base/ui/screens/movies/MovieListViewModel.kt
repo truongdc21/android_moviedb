@@ -3,17 +3,15 @@ package com.truongdc.android.base.ui.screens.movies
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import com.truongdc.android.base.base.CombinedStateViewModel
-import com.truongdc.android.base.base.UiStateViewModel
 import com.truongdc.android.base.base.state.CombinedStateDelegateImpl
-import com.truongdc.android.base.base.state.UiStateDelegateImpl
 import com.truongdc.android.base.data.local.datastores.PreferencesDataStore
 import com.truongdc.android.base.data.model.Movie
 import com.truongdc.android.base.data.repository.MovieRepository
+import com.truongdc.android.base.navigation.AppDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import java.lang.Thread.State
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,7 +37,11 @@ class MovieListViewModel @Inject constructor(
         data object LogOutFailed : Event
     }
 
-    fun requestMovie() {
+
+    init {
+        requestMovie()
+    }
+    private fun requestMovie() {
         launchTaskSync(onRequest = {
             internalState
             movieRepository.getMovies()
@@ -60,6 +62,20 @@ class MovieListViewModel @Inject constructor(
             hideLoading()
             sendEvent(Event.LogOutFailed)
         }
+    }
+
+    fun popToSplash() {
+        navigator.navigateTo(
+            route = AppDestination.Splash(),
+            popUpToRoute = AppDestination.MovieList.route,
+            isInclusive = true
+        )
+    }
+
+    fun navigateToMovieDetail(movieId: String) {
+        navigator.navigateTo(
+            route = AppDestination.MovieDetail(movieId)
+        )
     }
 }
 
