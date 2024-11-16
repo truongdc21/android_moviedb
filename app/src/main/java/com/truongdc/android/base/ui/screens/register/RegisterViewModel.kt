@@ -72,5 +72,8 @@ class RegisterViewModel @Inject constructor(
             }
         }
     }
+
+    fun navigateBack() = navigator.navigateBack()
+
 }
 

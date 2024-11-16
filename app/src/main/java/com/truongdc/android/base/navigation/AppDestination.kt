@@ -1,29 +1,57 @@
 package com.truongdc.android.base.navigation
 
-import androidx.navigation.NamedNavArgument
+import androidx.lifecycle.SavedStateHandle
+import com.truongdc.android.base.common.extensions.defaultEmpty
 
 sealed class AppDestination(
-    val route: String = ""
+    protected val routeName: String, vararg params: String
 ) {
+
     companion object {
-        const val KEY = ""
+        const val KEY_MOVIE_ID = "movieId"
     }
 
-    open val arguments: List<NamedNavArgument> = emptyList()
+    val route: String = if (params.isEmpty()) {
+        routeName
+    } else {
+        val builder = StringBuilder(routeName)
+        params.forEach { param -> builder.append("/{${param}}") }
+        builder.toString()
+    }
 
-    open var destination: String = route
+    open class NoArgumentsDestination(name: String) : AppDestination(name) {
+        operator fun invoke(): String = routeName
+    }
 
-    open var parcelableArgument: Pair<String, Any?> = "" to null
+    internal fun String.appendParams(vararg params: Pair<String, Any?>): String {
+        val builder = StringBuilder(this)
 
-    data class DESTINATION(val router: String) : AppDestination(router)
+        params.forEach { param ->
+            param.second
+                ?.toString()
+                ?.let { arg ->
+                    builder.append("/$arg")
+                }
+        }
 
-    data object Up : AppDestination()
+        return builder.toString()
+    }
 
-    data object Splash : AppDestination("splash")
+    data object Splash : NoArgumentsDestination("splash")
 
-    data object MovieList: AppDestination("movie_list")
+    data object Login : NoArgumentsDestination("login")
 
-    data object Login: AppDestination("login")
+    data object Register : NoArgumentsDestination("register")
 
-    data object Register: AppDestination("register")
+    data object MovieList : NoArgumentsDestination("movie_list")
+
+    data object MovieDetail : AppDestination("movie_detail", KEY_MOVIE_ID) {
+        operator fun invoke(movieId: String) = routeName.appendParams(
+            KEY_MOVIE_ID to movieId,
+        )
+
+        fun getMovieId(stateHandle: SavedStateHandle) =
+            stateHandle.get<String>(KEY_MOVIE_ID).defaultEmpty()
+    }
+
 }

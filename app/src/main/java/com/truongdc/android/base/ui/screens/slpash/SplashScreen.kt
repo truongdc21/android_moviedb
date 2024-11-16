@@ -19,32 +19,24 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.truongdc.android.base.R
-import com.truongdc.android.base.navigation.AppDestination
-import com.truongdc.android.base.navigation.navigate
-import com.truongdc.android.base.resource.theme.AppColors
 import com.truongdc.android.base.resource.dimens.DpSize
 import com.truongdc.android.base.resource.dimens.DpSize.dp30
 import com.truongdc.android.base.resource.dimens.SpSize.sp18
+import com.truongdc.android.base.resource.theme.AppColors
 import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
-    navHostController: NavHostController,
     viewModel: SplashViewModel = hiltViewModel()
 ) {
     LaunchedEffect(key1 = Unit) {
         viewModel.getIsLogin().collect { isLogin ->
             delay(1500)
             if (isLogin) {
-                navHostController.navigate(AppDestination.MovieList) {
-                    popUpTo(AppDestination.Splash.route) { inclusive = true }
-                }
+                viewModel.navigateMovies()
             } else {
-                navHostController.navigate(AppDestination.Login) {
-                    popUpTo(AppDestination.Splash.route) { inclusive = true }
-                }
+                viewModel.navigateLogin()
             }
         }
     }

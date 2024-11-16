@@ -5,10 +5,16 @@ import androidx.lifecycle.viewModelScope
 import com.truongdc.android.base.base.state.UiStateDelegate
 import com.truongdc.android.base.data.base.DataResult
 import com.truongdc.android.base.data.remote.error.ErrorResponse
+import com.truongdc.android.base.navigation.AppNavigator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 abstract class BaseViewModel<UiState, Event> : ViewModel() {
+
+    @Inject
+    lateinit var navigator: AppNavigator
+
     fun <T> UiStateDelegate<UiState, Event>.launchTaskSync(
         isLoading: Boolean = false,
         onRequest: suspend CoroutineScope.() -> DataResult<T>,
