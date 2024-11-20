@@ -16,12 +16,19 @@ class SplashViewModel @Inject constructor(
     fun getIsLogin() = preferencesDataStore.isLogIn
 
     fun navigateMovies() {
-        appNavigator.navigateTo(AppDestination.MovieList(), isInclusive = true)
+        appNavigator.navigateTo(
+            route = AppDestination.MovieList(),
+            popUpToRoute = AppDestination.Splash.route,
+            isInclusive = true
+        )
     }
 
     fun navigateLogin() {
-        appNavigator.navigateTo(AppDestination.Login(), isInclusive = true)
+        appNavigator.navigateTo(
+            AppDestination.Login(),
+            popUpToRoute = AppDestination.Splash.route,
+            isInclusive = true
+        )
     }
-
 
 }

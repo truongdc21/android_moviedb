@@ -1,8 +1,8 @@
-package com.truongdc.android.base.data.repository.movie
+package com.truongdc.android.base.data.repository.impl
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.truongdc.android.base.data.MovieDataSource
+import com.truongdc.android.base.data.source.MovieDataSource
 import com.truongdc.android.base.data.base.ExecuteResult
 import com.truongdc.android.base.data.remote.reponses.MoviePagingSource
 import com.truongdc.android.base.data.repository.MovieRepository

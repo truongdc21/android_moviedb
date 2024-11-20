@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option java_package = "com.truongdc.android.base.data.local.datastores";
+option java_multiple_files = true;
+
+message AppStateProto {
+  string themeBrand = 1;
+  string darkThemeConfig = 2;
+  string useDynamicColor = 3;
+}

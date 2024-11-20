@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Android Base MVVM Jetpack Compose"
+rootProject.name = "Android Movie DB"
 include(":app")

@@ -1,6 +1,6 @@
 package com.truongdc.android.base.di.module
 
-import com.truongdc.android.base.data.MovieDataSource
+import com.truongdc.android.base.data.source.MovieDataSource
 import com.truongdc.android.base.data.remote.MovieRemoteImpl
 import com.truongdc.android.base.data.remote.api.ApiService
 import dagger.Module

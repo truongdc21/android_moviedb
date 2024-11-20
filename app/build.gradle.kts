@@ -48,18 +48,18 @@ android {
     productFlavors {
         create(Builds.Flavors.DEV) {
             applicationIdSuffix = ".${Builds.Flavors.DEV}"
-            resValue("string", "app_name", "\"Base Dev\"")
+            resValue("string", "app_name", "\"MovieDB Dev\"")
             buildConfigField("String", "BASE_API_URL", "\"https://api.themoviedb.org/3/\"")
         }
 
         create(Builds.Flavors.STG) {
             applicationIdSuffix = ".${Builds.Flavors.STG}"
-            resValue("string", "app_name", "\"Base Stg\"")
+            resValue("string", "app_name", "\"MovieDb Stg\"")
             buildConfigField("String", "BASE_API_URL", "\"https://api.themoviedb.org/3/\"")
         }
 
         create(Builds.Flavors.PROD) {
-            resValue("string", "app_name", "\"Android Base\"")
+            resValue("string", "app_name", "\"MovieDb\"")
             buildConfigField("String", "BASE_API_URL", "\"https://api.themoviedb.org/3/\"")
         }
     }

@@ -1,5 +1,6 @@
 package com.truongdc.android.base.ui.screens.register
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,6 +32,7 @@ import com.truongdc.android.base.ui.components.BaseButton
 import com.truongdc.android.base.ui.components.BaseTextField
 import com.truongdc.android.base.ui.components.ObserverKeyBoard
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun RegisterScreen(
     viewModel: RegisterViewModel = hiltViewModel()
@@ -50,65 +53,69 @@ fun RegisterScreen(
                 }
             }
         }) { uiState ->
-        LocalView.current.ObserverKeyBoard { viewModel.onUpdateTextFiledFocus(it) }
-        Column(
-            modifier = Modifier
-                .background(AppColors.Yellow)
-                .fillMaxSize()
-                .padding(
-                    top = if (!uiState.isTextFieldFocused) DpSize.dp150 else DpSize.dp50,
-                    start = DpSize.dp24,
-                    end = DpSize.dp24
-                ),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "Create Account",
-                fontWeight = FontWeight.Bold,
-                fontSize = SpSize.sp32,
-                color = AppColors.White
-            )
-            BaseTextField(
-                value = uiState.email,
-                onValueChange = viewModel::onEmailChange,
-                textPlaceholder = "Mail ID",
-                paddingValues = PaddingValues(top = DpSize.dp50)
-            )
-            BaseTextField(
-                value = uiState.name,
-                onValueChange = viewModel::onNameChange,
-                textPlaceholder = "Full Name",
-                paddingValues = PaddingValues(top = DpSize.dp20)
-            )
-            BaseTextField(
-                value = uiState.pass,
-                onValueChange = viewModel::onPassChange,
-                textPlaceholder = "Password",
-                isPassWord = true,
-                paddingValues = PaddingValues(top = DpSize.dp20)
-            )
-            Spacer(modifier = Modifier.size(DpSize.dp40))
-            BaseButton(
-                onClick = {
-                    viewModel.onSubmitRegister(User(uiState.name, uiState.email, uiState.pass))
-                },
-                label = "Register", isEnable = !uiState.isInValid,
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Text(
-                text = "LOGIN",
-                fontSize = SpSize.sp18,
-                style = TextStyle(textDecoration = TextDecoration.Underline),
-                fontWeight = FontWeight.W500,
+        Scaffold {
+            LocalView.current.ObserverKeyBoard { viewModel.onUpdateTextFiledFocus(it) }
+            Column(
                 modifier = Modifier
-                    .padding(bottom = DpSize.dp30)
-                    .pointerInput(Unit) {
-                        detectTapGestures(onTap = {
-                            viewModel.navigateBack()
-                        })
+                    .background(AppColors.Yellow)
+                    .fillMaxSize()
+                    .padding(it)
+                    .padding(
+                        top = if (!uiState.isTextFieldFocused) DpSize.dp150 else DpSize.dp50,
+                        start = DpSize.dp24,
+                        end = DpSize.dp24
+                    ),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Create Account",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = SpSize.sp32,
+                    color = AppColors.White
+                )
+                BaseTextField(
+                    value = uiState.email,
+                    onValueChange = viewModel::onEmailChange,
+                    textPlaceholder = "Mail ID",
+                    paddingValues = PaddingValues(top = DpSize.dp50)
+                )
+                BaseTextField(
+                    value = uiState.name,
+                    onValueChange = viewModel::onNameChange,
+                    textPlaceholder = "Full Name",
+                    paddingValues = PaddingValues(top = DpSize.dp20)
+                )
+                BaseTextField(
+                    value = uiState.pass,
+                    onValueChange = viewModel::onPassChange,
+                    textPlaceholder = "Password",
+                    isPassWord = true,
+                    paddingValues = PaddingValues(top = DpSize.dp20)
+                )
+                Spacer(modifier = Modifier.size(DpSize.dp40))
+                BaseButton(
+                    onClick = {
+                        viewModel.onSubmitRegister(User(uiState.name, uiState.email, uiState.pass))
                     },
-            )
+                    label = "Register", isEnable = !uiState.isInValid,
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Text(
+                    text = "LOGIN",
+                    fontSize = SpSize.sp18,
+                    style = TextStyle(textDecoration = TextDecoration.Underline),
+                    fontWeight = FontWeight.W500,
+                    modifier = Modifier
+                        .padding(bottom = DpSize.dp30)
+                        .pointerInput(Unit) {
+                            detectTapGestures(onTap = {
+                                viewModel.navigateBack()
+                            })
+                        },
+                )
+            }
         }
+
     }
 }
 
