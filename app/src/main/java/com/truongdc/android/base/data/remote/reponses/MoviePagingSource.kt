@@ -4,11 +4,12 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.truongdc.android.base.data.model.Movie
 import com.truongdc.android.base.common.constant.Constants
+import com.truongdc.android.base.data.source.MovieDataSource
 import retrofit2.HttpException
 import java.io.IOException
 
 class MoviePagingSource(
-    private val movieRemoteSource : com.truongdc.android.base.data.MovieDataSource.Remote
+    private val movieRemoteSource : MovieDataSource.Remote
 ): PagingSource<Int, Movie>(){
     override fun getRefreshKey(state: PagingState<Int, Movie>): Int? {
         return state.anchorPosition

@@ -1,6 +1,8 @@
 package com.truongdc.android.base.navigation
 
 import android.app.Activity
+import android.widget.Toast
+import androidx.compose.material3.SnackbarDuration
 import androidx.navigation.NavHostController
 import com.truongdc.android.base.BuildConfig
 import kotlinx.coroutines.channels.BufferOverflow
@@ -10,16 +12,26 @@ import javax.inject.Inject
 
 interface AppNavigator {
 
-    val activity: Activity?
     val navController: NavHostController
 
-    fun setActivity(activity: Activity?)
+    val navigationChannel: Channel<NavigationIntent>
 
     fun setNavController(navController: NavHostController)
 
-    fun navigateBack(
-        route: String? = null,
-        inclusive: Boolean = false,
+    fun showToast(
+        message: String,
+        duration: Int = Toast.LENGTH_SHORT
+    )
+
+    fun showSnackBar(
+        message: String,
+        actionLabel: String? = null,
+        withDismissAction: Boolean = false,
+        duration: SnackbarDuration = if (actionLabel == null) SnackbarDuration.Short else SnackbarDuration.Indefinite
+    )
+
+    fun showSettingDialog(
+        isShowDialog: Boolean
     )
 
     fun navigateTo(
@@ -27,6 +39,18 @@ interface AppNavigator {
         popUpToRoute: String? = null,
         isInclusive: Boolean = false,
         isSingleTop: Boolean = false,
+    )
+
+    fun navigateBack(
+        route: String? = null,
+        inclusive: Boolean = false,
+    )
+
+    fun navigateBackWithResult(
+        key: String,
+        result: Any?,
+        route: String?,
+        inclusive: Boolean = false
     )
 
     fun currentRoute(): String?
@@ -41,31 +65,46 @@ interface AppNavigator {
 
 class AppNavigatorImpl @Inject constructor() : AppNavigator {
 
-    private var _activity: Activity? = null
     private var _navController: NavHostController? = null
-    override val activity: Activity?
-        get() = _activity
-            ?: throw IllegalStateException("Activity not has initialize in AppNavigator!")
 
     override val navController: NavHostController
         get() = _navController
             ?: throw IllegalStateException("NavHostController not has initialize in AppNavigator!")
 
-    override fun setActivity(activity: Activity?) {
-        _activity = activity
-    }
+    override val navigationChannel = Channel<NavigationIntent>(
+        capacity = Int.MAX_VALUE,
+        onBufferOverflow = BufferOverflow.DROP_LATEST,
+    )
 
     override fun setNavController(navController: NavHostController) {
         _navController = navController
     }
 
-    override fun navigateBack(route: String?, inclusive: Boolean) {
-        if (activity?.isFinishing == true) return
-        if (route != null) {
-            navController.popBackStack(route, inclusive)
-        } else {
-            navController.popBackStack()
-        }
+    override fun showToast(message: String, duration: Int) {
+        navigationChannel.trySend(
+            NavigationIntent.ShowToast(message, duration)
+        )
+    }
+
+    override fun showSnackBar(
+        message: String,
+        actionLabel: String?,
+        withDismissAction: Boolean,
+        duration: SnackbarDuration
+    ) {
+        navigationChannel.trySend(
+            NavigationIntent.ShowSnackBar(
+                message,
+                actionLabel,
+                withDismissAction,
+            )
+        )
+    }
+
+    override fun showSettingDialog(isShowDialog: Boolean) {
+        navigationChannel.trySend(
+            NavigationIntent.ShowSettingDialog(isShowDialog)
+        )
     }
 
     override fun navigateTo(
@@ -74,13 +113,33 @@ class AppNavigatorImpl @Inject constructor() : AppNavigator {
         isInclusive: Boolean,
         isSingleTop: Boolean
     ) {
-        if (activity?.isFinishing == true) return
         navController.navigate(route) {
             launchSingleTop = isSingleTop
             popUpToRoute?.let { popUpToRoute ->
                 popUpTo(popUpToRoute) { inclusive = isInclusive }
             }
         }
+    }
+
+    override fun navigateBack(
+        route: String?,
+        inclusive: Boolean
+    ) {
+        route?.let {
+            navController.popBackStack(it, inclusive)
+        } ?: navController.popBackStack()
+    }
+
+    override fun navigateBackWithResult(
+        key: String,
+        result: Any?,
+        route: String?,
+        inclusive: Boolean
+    ) {
+        navController.previousBackStackEntry?.savedStateHandle?.set(key, result)
+        route?.let {
+            navController.popBackStack(it, inclusive)
+        } ?: navController.popBackStack()
     }
 
     override fun currentRoute(): String? {

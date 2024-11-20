@@ -62,7 +62,6 @@ class RegisterViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 showLoading()
-                delay(2000)
                 userDataStore.saveUser(user)
                 sendEvent(Event.RegisterSuccess)
                 hideLoading()

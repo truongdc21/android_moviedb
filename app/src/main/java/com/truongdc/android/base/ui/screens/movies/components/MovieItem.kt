@@ -38,7 +38,6 @@ fun MovieItem(movie: Movie, onClickItem: (Int) -> Unit) {
     Card(
         modifier = Modifier
             .padding(start = DpSize.dp16, end = DpSize.dp16, top = DpSize.dp8, bottom = DpSize.dp8)
-            .background(Color.White)
             .fillMaxWidth(),
         onClick = {
             onClickItem(movie.id)

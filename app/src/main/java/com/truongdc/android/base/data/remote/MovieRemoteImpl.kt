@@ -1,6 +1,6 @@
 package com.truongdc.android.base.data.remote
 
-import com.truongdc.android.base.data.MovieDataSource
+import com.truongdc.android.base.data.source.MovieDataSource
 import com.truongdc.android.base.data.remote.api.ApiService
 import com.truongdc.android.base.data.remote.reponses.BaseResponse
 import com.truongdc.android.base.data.model.Movie

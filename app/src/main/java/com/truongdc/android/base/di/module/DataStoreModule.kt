@@ -1,5 +1,7 @@
 package com.truongdc.android.base.di.module
 
+import com.truongdc.android.base.data.local.datastores.AppStateDataStore
+import com.truongdc.android.base.data.local.datastores.AppStateDataStoreImpl
 import com.truongdc.android.base.data.local.datastores.PreferencesDataStore
 import com.truongdc.android.base.data.local.datastores.PreferencesDataStoreImpl
 import com.truongdc.android.base.data.local.datastores.UserDataStore
@@ -21,5 +23,9 @@ interface DataStoreModule {
     @Binds
     @Singleton
     fun providesPreferencesDataStore(impl: PreferencesDataStoreImpl): PreferencesDataStore
+
+    @Binds
+    @Singleton
+    fun providesAppStateDataStore(impl: AppStateDataStoreImpl): AppStateDataStore
 
 }

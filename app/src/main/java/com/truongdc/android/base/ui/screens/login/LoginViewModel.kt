@@ -58,11 +58,9 @@ class LoginViewModel @Inject constructor(
             showLoading()
             if (user.email == email && user.password == pass) {
                 preferencesDataStore.setIsLogIn(true)
-                delay(2000)
                 sendEvent(Event.LoginSuccess)
                 hideLoading()
             } else {
-                delay(2000)
                 sendEvent(Event.LoginFailed)
                 hideLoading()
             }
@@ -76,7 +74,7 @@ class LoginViewModel @Inject constructor(
     fun navigateMovies() {
         navigator.navigateTo(
             route = AppDestination.MovieList(),
-            popUpToRoute = AppDestination.Splash.route,
+            popUpToRoute = AppDestination.Login.route,
             isInclusive = true,
         )
     }

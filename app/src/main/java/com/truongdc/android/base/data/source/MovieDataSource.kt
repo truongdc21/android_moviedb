@@ -1,4 +1,4 @@
-package com.truongdc.android.base.data
+package com.truongdc.android.base.data.source
 
 import com.truongdc.android.base.data.model.Movie
 import com.truongdc.android.base.data.remote.reponses.BaseResponse
