@@ -1,10 +1,12 @@
 package com.truongdc.android.base.navigation
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.material3.SnackbarDuration
 import androidx.navigation.NavHostController
 import com.truongdc.android.base.BuildConfig
+import com.truongdc.android.base.common.utils.collectIn
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.channels.Channel
 import timber.log.Timber
@@ -16,7 +18,7 @@ interface AppNavigator {
 
     val navigationChannel: Channel<NavigationIntent>
 
-    fun setNavController(navController: NavHostController)
+    fun initNav(navController: NavHostController)
 
     fun showToast(
         message: String,
@@ -57,7 +59,7 @@ interface AppNavigator {
 
     fun currentArguments(): Map<String, Any?>?
 
-    fun observerCurrentStack()
+    fun observerCurrentStack(coroutineScope: CoroutineScope)
 
     fun observeDestinationChanges()
 
@@ -76,7 +78,7 @@ class AppNavigatorImpl @Inject constructor() : AppNavigator {
         onBufferOverflow = BufferOverflow.DROP_LATEST,
     )
 
-    override fun setNavController(navController: NavHostController) {
+    override fun initNav(navController: NavHostController) {
         _navController = navController
     }
 
@@ -152,11 +154,12 @@ class AppNavigatorImpl @Inject constructor() : AppNavigator {
         }
     }
 
-    override fun observerCurrentStack() {
+    @SuppressLint("RestrictedApi")
+    override fun observerCurrentStack(coroutineScope: CoroutineScope) {
         val routes = mutableListOf<String>()
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            val route = destination.route ?: "Unknown Route"
-            routes.add(route)
+        navController.currentBackStack.collectIn(coroutineScope) { navBackStack ->
+            routes.clear()
+            navBackStack.forEach { entry -> routes.add(entry.destination.route ?: "") }
             logNavigation("Current Stack: $routes")
         }
     }

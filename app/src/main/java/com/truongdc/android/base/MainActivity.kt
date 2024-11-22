@@ -1,6 +1,6 @@
 package com.truongdc.android.base
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
@@ -13,7 +13,6 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -22,7 +21,6 @@ import androidx.navigation.compose.rememberNavController
 import com.truongdc.android.base.common.enums.DarkThemeConfig
 import com.truongdc.android.base.common.enums.ThemeBrand
 import com.truongdc.android.base.navigation.AppNavigator
-import com.truongdc.android.base.navigation.MovieNavHost
 import com.truongdc.android.base.resource.theme.MovieDbTheme
 import com.truongdc.android.base.ui.screens.app.MovieDbApp
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,8 +35,11 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var appNavigator: AppNavigator
 
+    private var isNavigationInitialized = false
+
     private val viewModel: MainActivityViewModel by viewModels()
 
+    @SuppressLint("RememberReturnType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -55,7 +56,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val isDarkTheme = shouldDarkTheme(uiState = uiState)
             val navHostController = rememberNavController()
-            setUpNavigation(navHostController)
+            initializeNavigation(navHostController)
             DisposableEffect(isDarkTheme) {
                 enableEdgeToEdge(
                     statusBarStyle = SystemBarStyle.auto(
@@ -73,22 +74,24 @@ class MainActivity : ComponentActivity() {
             MovieDbTheme(
                 darkTheme = isDarkTheme,
                 androidTheme = shouldUseAndroidTheme(uiState),
-                disableDynamicTheming = shouldDisableDynamicTheming(uiState)
+                disableDynamicTheming = shouldDisableDynamicTheming(uiState),
             ) {
                 MovieDbApp(appNavigator)
             }
         }
     }
 
-    private fun setUpNavigation(
+    private fun initializeNavigation(
         navHostController: NavHostController,
-        isShowLogObserver: Boolean = BuildConfig.DEBUG
+        shouldLogNavigation: Boolean = BuildConfig.DEBUG
     ) {
+        if (isNavigationInitialized) return
+        isNavigationInitialized = true
         appNavigator.apply {
-            setNavController(navHostController)
-            if (isShowLogObserver) {
+            initNav(navHostController)
+            if (shouldLogNavigation) {
                 observeDestinationChanges()
-                observerCurrentStack()
+                observerCurrentStack(lifecycleScope)
             }
         }
     }

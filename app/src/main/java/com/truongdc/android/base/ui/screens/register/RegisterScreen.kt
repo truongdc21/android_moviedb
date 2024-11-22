@@ -1,10 +1,12 @@
 package com.truongdc.android.base.ui.screens.register
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -21,21 +23,24 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.truongdc.android.base.base.compose.UiStateContent
 import com.truongdc.android.base.common.extensions.showToast
 import com.truongdc.android.base.data.model.User
-import com.truongdc.android.base.resource.dimens.DpSize
-import com.truongdc.android.base.resource.dimens.SpSize
-import com.truongdc.android.base.resource.theme.AppColors
-import com.truongdc.android.base.ui.components.BaseButton
-import com.truongdc.android.base.ui.components.BaseTextField
+import com.truongdc.android.base.resource.dimens.isLandscape
+import com.truongdc.android.base.resource.dimens.isPortrait
+import com.truongdc.android.base.resource.theme.AppTheme
+import com.truongdc.android.base.resource.theme.MovieDbTheme
 import com.truongdc.android.base.ui.components.ObserverKeyBoard
+import com.truongdc.android.base.ui.components.PrimaryButton
+import com.truongdc.android.base.ui.components.PrimaryTextField
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun RegisterScreen(
-    viewModel: RegisterViewModel = hiltViewModel()
+    viewModel: RegisterViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
     UiStateContent(
@@ -52,79 +57,163 @@ fun RegisterScreen(
                     context.showToast("Register Failed, Please try again!")
                 }
             }
-        }) { uiState ->
-        Scaffold {
-            LocalView.current.ObserverKeyBoard { viewModel.onUpdateTextFiledFocus(it) }
-            Column(
-                modifier = Modifier
-                    .background(AppColors.Yellow)
-                    .fillMaxSize()
-                    .padding(it)
-                    .padding(
-                        top = if (!uiState.isTextFieldFocused) DpSize.dp150 else DpSize.dp50,
-                        start = DpSize.dp24,
-                        end = DpSize.dp24
-                    ),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "Create Account",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = SpSize.sp32,
-                    color = AppColors.White
-                )
-                BaseTextField(
-                    value = uiState.email,
-                    onValueChange = viewModel::onEmailChange,
+        }, content = { uiState ->
+            RegisterContent(
+                email = uiState.email,
+                name = uiState.name,
+                pass = uiState.pass,
+                isInValid = uiState.isInValid,
+                isTextFieldFocused = uiState.isTextFieldFocused,
+                onUpdateTextFiledFocus = viewModel::onUpdateTextFiledFocus,
+                onEmailChange = viewModel::onEmailChange,
+                onNameChange = viewModel::onNameChange,
+                onPassChange = viewModel::onPassChange,
+                onSubmitRegister = viewModel::onSubmitRegister,
+                onNavigateBack = viewModel::navigateBack
+            )
+        })
+}
+
+@Composable
+private fun RegisterContent(
+    email: String,
+    name: String,
+    pass: String,
+    isInValid: Boolean,
+    isTextFieldFocused: Boolean,
+    onUpdateTextFiledFocus: (Boolean) -> Unit,
+    onEmailChange: (String) -> Unit,
+    onNameChange: (String) -> Unit,
+    onPassChange: (String) -> Unit,
+    onSubmitRegister: (User) -> Unit,
+    onNavigateBack: () -> Unit,
+) {
+    Scaffold {
+        val paddingTopContent = if (AppTheme.orientation.isLandscape()) 10.dp else
+            if (!isTextFieldFocused) 150.dp else 0.dp
+        val paddingHorizontalContent = if (AppTheme.orientation.isLandscape()) 230.dp else 24.dp
+        LocalView.current.ObserverKeyBoard { isShown ->
+            onUpdateTextFiledFocus(isShown)
+        }
+        Column(
+            modifier = Modifier
+                .background(AppTheme.colors.primary)
+                .fillMaxSize()
+                .padding(it)
+                .padding(
+                    top = paddingTopContent,
+                    start = paddingHorizontalContent,
+                    end = paddingHorizontalContent
+                ),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Create Account",
+                style = AppTheme.styles.displaySmall,
+                color = AppTheme.colors.onPrimary
+            )
+            Text(
+                text = "Create account to login",
+                style = AppTheme.styles.bodyLarge,
+                color = AppTheme.colors.onPrimary
+            )
+            if (AppTheme.orientation.isPortrait()) {
+                PrimaryTextField(
+                    value = email,
+                    onValueChange = onEmailChange,
                     textPlaceholder = "Mail ID",
-                    paddingValues = PaddingValues(top = DpSize.dp50)
+                    paddingValues = PaddingValues(
+                        top = if (AppTheme.orientation.isLandscape()) 10.dp else 50.dp
+                    )
                 )
-                BaseTextField(
-                    value = uiState.name,
-                    onValueChange = viewModel::onNameChange,
+                PrimaryTextField(
+                    value = name,
+                    onValueChange = onNameChange,
                     textPlaceholder = "Full Name",
-                    paddingValues = PaddingValues(top = DpSize.dp20)
+                    paddingValues = PaddingValues(
+                        top = if (AppTheme.orientation.isLandscape()) 10.dp else 20.dp
+                    )
                 )
-                BaseTextField(
-                    value = uiState.pass,
-                    onValueChange = viewModel::onPassChange,
-                    textPlaceholder = "Password",
-                    isPassWord = true,
-                    paddingValues = PaddingValues(top = DpSize.dp20)
+            } else {
+                Row {
+                    PrimaryTextField(
+                        value = email,
+                        onValueChange = onEmailChange,
+                        textPlaceholder = "Mail ID",
+                        modifier = Modifier.weight(1f)
+                    )
+                    Spacer(modifier = Modifier.size(10.dp))
+                    PrimaryTextField(
+                        value = name,
+                        onValueChange = onNameChange,
+                        textPlaceholder = "Full Name",
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+            }
+            PrimaryTextField(
+                value = pass,
+                onValueChange = onPassChange,
+                textPlaceholder = "Password",
+                isPassWord = true,
+                paddingValues = PaddingValues(
+                    top = if (AppTheme.orientation.isLandscape()) 10.dp else 20.dp
+                ),
+                modifier = null
+            )
+            Spacer(
+                modifier = Modifier.size(
+                    if (AppTheme.orientation.isLandscape()) 20.dp else 40.dp
                 )
-                Spacer(modifier = Modifier.size(DpSize.dp40))
-                BaseButton(
-                    onClick = {
-                        viewModel.onSubmitRegister(User(uiState.name, uiState.email, uiState.pass))
-                    },
-                    label = "Register", isEnable = !uiState.isInValid,
-                )
-                Spacer(modifier = Modifier.weight(1f))
+            )
+            PrimaryButton(
+                onClick = {
+                    onSubmitRegister(User(name, email, pass))
+                },
+                label = "Register", isEnable = !isInValid,
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            if (AppTheme.orientation.isPortrait())
                 Text(
                     text = "LOGIN",
-                    fontSize = SpSize.sp18,
-                    style = TextStyle(textDecoration = TextDecoration.Underline),
+                    style = AppTheme.styles.bodyLarge.copy(
+                        textDecoration = TextDecoration.Underline
+                    ),
                     fontWeight = FontWeight.W500,
+                    color = AppTheme.colors.onPrimary,
                     modifier = Modifier
-                        .padding(bottom = DpSize.dp30)
+                        .padding(bottom = 30.dp)
                         .pointerInput(Unit) {
                             detectTapGestures(onTap = {
-                                viewModel.navigateBack()
+                                onNavigateBack()
                             })
                         },
                 )
-            }
         }
-
     }
 }
 
 @Composable
 @Preview(
     showSystemUi = true,
-    showBackground = true
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_TYPE_NORMAL,
+    device = "spec:orientation=landscape,width=411dp,height=891dp"
 )
 private fun Preview() {
-    RegisterScreen()
+    MovieDbTheme {
+        RegisterContent(
+            email = "",
+            name = "",
+            pass = "",
+            isInValid = false,
+            isTextFieldFocused = false,
+            onUpdateTextFiledFocus = {},
+            onEmailChange = {},
+            onNameChange = {},
+            onPassChange = {},
+            onSubmitRegister = {},
+            onNavigateBack = {}
+        )
+    }
 }
-

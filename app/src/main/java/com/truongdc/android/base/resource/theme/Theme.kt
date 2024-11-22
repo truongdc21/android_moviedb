@@ -4,7 +4,10 @@ import android.os.Build
 import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
+import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -12,10 +15,23 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-
+import com.truongdc.android.base.resource.dimens.Dimensions
+import com.truongdc.android.base.resource.dimens.LocalAppDimens
+import com.truongdc.android.base.resource.dimens.LocalOrientationMode
+import com.truongdc.android.base.resource.dimens.LocalWindowType
+import com.truongdc.android.base.resource.dimens.Orientation
+import com.truongdc.android.base.resource.dimens.WindowSize
+import com.truongdc.android.base.resource.dimens.WindowSizeClass
+import com.truongdc.android.base.resource.dimens.WindowType
+import com.truongdc.android.base.resource.dimens.compactDimensions
+import com.truongdc.android.base.resource.dimens.largeDimensions
+import com.truongdc.android.base.resource.dimens.mediumDimensions
+import com.truongdc.android.base.resource.dimens.rememberWindowSizeClass
+import com.truongdc.android.base.resource.dimens.smallDimensions
 
 /**
  * Light default theme color scheme
@@ -165,8 +181,11 @@ val LightAndroidBackgroundTheme = BackgroundTheme(color = DarkGreenGray95)
  */
 val DarkAndroidBackgroundTheme = BackgroundTheme(color = Color.Black)
 
+
+@ChecksSdkIntAtLeast(api = Build.VERSION_CODES.S)
+fun supportsDynamicTheming() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+
 /**
- * Now in Android theme.
  *
  * @param darkTheme Whether the theme should use a dark color scheme (follows system by default).
  * @param androidTheme Whether the theme should use the Android theme color scheme instead of the
@@ -179,6 +198,7 @@ fun MovieDbTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     androidTheme: Boolean = false,
     disableDynamicTheming: Boolean = true,
+    windowSizeClass: WindowSizeClass = rememberWindowSizeClass(),
     content: @Composable () -> Unit,
 ) {
     // Color scheme
@@ -212,24 +232,96 @@ fun MovieDbTheme(
         androidTheme -> if (darkTheme) DarkAndroidBackgroundTheme else LightAndroidBackgroundTheme
         else -> defaultBackgroundTheme
     }
+
     val tintTheme = when {
         androidTheme -> TintTheme()
         !disableDynamicTheming && supportsDynamicTheming() -> TintTheme(colorScheme.primary)
         else -> TintTheme()
     }
+
+    // Config size
+    val orientation = when {
+        windowSizeClass.width.size > windowSizeClass.height.size -> Orientation.Landscape
+        else -> Orientation.Portrait
+    }
+
+    // Config size that matters
+    val sizeThatMatters = when (orientation) {
+        Orientation.Portrait -> windowSizeClass.width
+        else -> windowSizeClass.height
+    }
+
+    // Config dimensions
+    val dimensions = when (sizeThatMatters) {
+        is WindowSize.Small -> smallDimensions
+        is WindowSize.Compact -> compactDimensions
+        is WindowSize.Medium -> mediumDimensions
+        else -> largeDimensions
+    }
+
+    // Config window type
+    val windowType = when (sizeThatMatters) {
+        is WindowSize.Small -> WindowType.Small
+        is WindowSize.Compact -> WindowType.Compact
+        is WindowSize.Medium -> WindowType.Medium
+        else -> WindowType.Large
+    }
+
     // Composition locals
     CompositionLocalProvider(
         LocalGradientColors provides gradientColors,
         LocalBackgroundTheme provides backgroundTheme,
         LocalTintTheme provides tintTheme,
+        LocalAppDimens provides dimensions,
+        LocalOrientationMode provides orientation,
+        LocalWindowType provides windowType,
     ) {
         MaterialTheme(
             colorScheme = colorScheme,
-            typography = MovieTypography,
+            typography = typographyDefault,
             content = content,
         )
     }
 }
 
-@ChecksSdkIntAtLeast(api = Build.VERSION_CODES.S)
-fun supportsDynamicTheming() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+/**
+ * This helps to get access some provider local in the composable function
+ */
+object AppTheme {
+    val dimens: Dimensions
+        @Composable
+        get() = LocalAppDimens.current
+
+    val orientation: Orientation
+        @Composable
+        get() = LocalOrientationMode.current
+
+    val windowType: WindowType
+        @Composable
+        get() = LocalWindowType.current
+
+    val styles: Typography
+        @Composable
+        get() = MaterialTheme.typography
+
+    val colors: ColorScheme
+        @Composable
+        get() = MaterialTheme.colorScheme
+
+    val shapes: Shapes
+        @Composable
+        get() = MaterialTheme.shapes
+
+    val gradientColors: GradientColors
+        @Composable
+        get() = LocalGradientColors.current
+
+    val backgroundTheme: BackgroundTheme
+        @Composable
+        get() = LocalBackgroundTheme.current
+
+    val tintTheme: TintTheme
+        @Composable
+        get() = LocalTintTheme.current
+
+}

@@ -2,15 +2,11 @@ package com.truongdc.android.base.resource.theme
 
 import androidx.compose.ui.graphics.Color
 
-object AppColors {
-    val White = Color(0xFFFFFFFF)
-    val Black = Color(0xFF000000)
-    val Gray = Color(0xFF888888)
-    val Yellow = Color(0xFFFFC300)
-    val Indigo = Color(0xFF5C6BC0)
-    val BlackCard = Color(0xFF424242)
-}
-
+internal val White = Color(0xFFFFFFFF)
+internal val Black = Color(0xFF000000)
+internal val Gray = Color(0xFF888888)
+internal val Yellow = Color(0xFFFFC300)
+internal val BlackCard = Color(0xFF424242)
 internal val Blue10 = Color(0xFF001F28)
 internal val Blue20 = Color(0xFF003544)
 internal val Blue30 = Color(0xFF004D61)
