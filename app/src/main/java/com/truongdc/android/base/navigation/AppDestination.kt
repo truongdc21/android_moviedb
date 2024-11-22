@@ -37,8 +37,6 @@ sealed class AppDestination(
         return builder.toString()
     }
 
-    data object Splash : NoArgumentsDestination("splash")
-
     data object Login : NoArgumentsDestination("login")
 
     data object Register : NoArgumentsDestination("register")
@@ -53,5 +51,4 @@ sealed class AppDestination(
         fun getMovieId(stateHandle: SavedStateHandle) =
             stateHandle.get<String>(KEY_MOVIE_ID).defaultEmpty()
     }
-
 }

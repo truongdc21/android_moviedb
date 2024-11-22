@@ -84,4 +84,6 @@ object Versions {
     const val DATA_STORE = "1.0.0"
 
     const val UI_TOOL_PREVIEW = "1.6.4"
+
+    const val SPLASH_SCREEN = "1.0.1"
 }
