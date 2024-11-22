@@ -1,6 +1,7 @@
 package com.truongdc.android.base.ui.screens.login
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
@@ -9,6 +10,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,27 +23,28 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.truongdc.android.base.base.compose.UiStateContent
 import com.truongdc.android.base.common.extensions.showToast
-import com.truongdc.android.base.resource.dimens.DpSize
-import com.truongdc.android.base.resource.dimens.SpSize
-import com.truongdc.android.base.resource.theme.AppColors
-import com.truongdc.android.base.ui.components.BaseButton
-import com.truongdc.android.base.ui.components.BaseTextField
+import com.truongdc.android.base.resource.dimens.isLandscape
+import com.truongdc.android.base.resource.dimens.isPortrait
+import com.truongdc.android.base.resource.theme.AppTheme
+import com.truongdc.android.base.resource.theme.MovieDbTheme
 import com.truongdc.android.base.ui.components.ObserverKeyBoard
+import com.truongdc.android.base.ui.components.PrimaryButton
+import com.truongdc.android.base.ui.components.PrimaryTextField
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun LoginScreen(
-    viewModel: LoginViewModel = hiltViewModel()
+    viewModel: LoginViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
     val view = LocalView.current
-    val keyboardController = LocalSoftwareKeyboardController.current
     view.ObserverKeyBoard { viewModel.onUpdateTextFiledFocus(it) }
     UiStateContent(viewModel = viewModel, modifier = Modifier, onEventEffect = { event ->
         when (event) {
@@ -52,73 +58,146 @@ fun LoginScreen(
             }
         }
     }, content = { uiState ->
-        Scaffold {
-            Column(
-                modifier = Modifier
-                    .background(AppColors.Yellow)
-                    .fillMaxSize()
-                    .padding(it)
-                    .padding(
-                        top = if (!uiState.isTextFieldFocused) DpSize.dp150 else DpSize.dp80,
-                        start = DpSize.dp24,
-                        end = DpSize.dp24
-                    ),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "Welcome Back!",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = SpSize.sp32,
-                    color = AppColors.White
+        LoginContent(
+            email = uiState.email,
+            pass = uiState.pass,
+            inValid = uiState.isInValid,
+            isTextFieldFocused = uiState.isTextFieldFocused,
+            onEmailChange = viewModel::onEmailChange,
+            onPassChange = viewModel::onPassChange,
+            onSubmitLogin = viewModel::onSubmitLogin,
+            onNavigateRegister = viewModel::navigateRegister
+        )
+    })
+}
+
+@Composable
+private fun LoginContent(
+    email: String,
+    pass: String,
+    inValid: Boolean,
+    isTextFieldFocused: Boolean,
+    onEmailChange: (String) -> Unit,
+    onPassChange: (String) -> Unit,
+    onSubmitLogin: (String, String) -> Unit,
+    onNavigateRegister: () -> Unit,
+) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val paddingTopContent = if (AppTheme.orientation.isLandscape()) 10.dp else
+        if (!isTextFieldFocused) 150.dp else 80.dp
+    val paddingHorizontalContent = if (AppTheme.orientation.isLandscape()) 230.dp else 24.dp
+    Scaffold(
+        floatingActionButton = {
+            if (AppTheme.orientation.isLandscape())
+                FloatingActionButton(
+                    onClick = { onNavigateRegister() },
+                    content = { Icon(Icons.Filled.Add, contentDescription = null) }
                 )
-                Text(
-                    text = "Login to continue",
-                    fontSize = SpSize.sp16,
-                    color = AppColors.White
+        }
+    ) {
+        Column(
+            modifier = Modifier
+                .background(AppTheme.colors.primary)
+                .fillMaxSize()
+                .padding(it)
+                .padding(
+                    top = paddingTopContent,
+                    start = paddingHorizontalContent,
+                    end = paddingHorizontalContent
+                ),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Welcome Back!",
+                style = AppTheme.styles.displaySmall,
+                color = AppTheme.colors.onPrimary
+            )
+            Text(
+                text = "Login to continue",
+                style = AppTheme.styles.bodyLarge,
+                color = AppTheme.colors.onPrimary
+            )
+            PrimaryTextField(
+                value = email,
+                onValueChange = { email -> onEmailChange((email)) },
+                textPlaceholder = "Mail ID",
+                paddingValues = PaddingValues(
+                    top = if (AppTheme.orientation.isLandscape()) 10.dp else 50.dp
                 )
-                BaseTextField(
-                    value = uiState.email,
-                    onValueChange = viewModel::onEmailChange,
-                    textPlaceholder = "Mail ID",
-                    paddingValues = PaddingValues(top = DpSize.dp50)
+            )
+            PrimaryTextField(
+                value = pass,
+                onValueChange = { pass -> onPassChange(pass) },
+                textPlaceholder = "Password",
+                isPassWord = true,
+                paddingValues = PaddingValues(
+                    top = if (AppTheme.orientation.isLandscape()) 10.dp else 20.dp
                 )
-                BaseTextField(
-                    value = uiState.pass,
-                    onValueChange = viewModel::onPassChange,
-                    textPlaceholder = "Password",
-                    isPassWord = true,
-                    paddingValues = PaddingValues(top = DpSize.dp20)
+            )
+            Spacer(
+                modifier = Modifier.size(
+                    if (AppTheme.orientation.isLandscape()) 10.dp else 30.dp
                 )
-                Spacer(modifier = Modifier.size(DpSize.dp30))
-                Text(
-                    text = "Forget Password?",
-                    fontSize = SpSize.sp14,
-                    style = TextStyle(textDecoration = TextDecoration.Underline)
+            )
+            Text(
+                text = "Forget Password?",
+                style = AppTheme.styles.bodyLarge.copy(
+                    textDecoration = TextDecoration.Underline
+                ),
+                color = AppTheme.colors.onPrimary,
+            )
+            Spacer(
+                modifier = Modifier.size(
+                    if (AppTheme.orientation.isLandscape()) 10.dp else 30.dp
                 )
-                Spacer(modifier = Modifier.size(DpSize.dp30))
-                BaseButton(
-                    label = "Login",
-                    isEnable = !uiState.isInValid,
-                    onClick = {
-                        keyboardController?.hide()
-                        viewModel.onSubmitLogin(uiState.email, uiState.pass)
-                    })
-                Spacer(modifier = Modifier.weight(1f))
+            )
+            PrimaryButton(
+                label = "Login",
+                isEnable = !inValid,
+                onClick = {
+                    keyboardController?.hide()
+                    onSubmitLogin(email, pass)
+                })
+            Spacer(modifier = Modifier.weight(1f))
+            if (AppTheme.orientation.isPortrait())
                 Text(
                     text = "CREATE ACCOUNT",
-                    fontSize = SpSize.sp18,
-                    style = TextStyle(textDecoration = TextDecoration.Underline),
+                    style = AppTheme.styles.bodyLarge.copy(
+                        textDecoration = TextDecoration.Underline
+                    ),
                     fontWeight = FontWeight.W500,
+                    color = AppTheme.colors.onPrimary,
                     modifier = Modifier
-                        .padding(bottom = DpSize.dp30)
+                        .padding(bottom = 30.dp)
                         .pointerInput(Unit) {
                             detectTapGestures(onTap = {
-                                viewModel.navigateRegister()
+                                onNavigateRegister()
                             })
                         },
                 )
-            }
         }
-    })
-
+    }
 }
+
+@Preview(
+    showBackground = true,
+    showSystemUi = true,
+    uiMode = Configuration.UI_MODE_TYPE_NORMAL,
+    device = "spec:orientation=landscape,width=411dp,height=891dp"
+)
+@Composable
+private fun Preview() {
+    MovieDbTheme {
+        LoginContent(
+            email = "",
+            pass = "",
+            inValid = false,
+            isTextFieldFocused = false,
+            onEmailChange = {},
+            onPassChange = {},
+            onSubmitLogin = { _, _ -> },
+            onNavigateRegister = {}
+        )
+    }
+}
+

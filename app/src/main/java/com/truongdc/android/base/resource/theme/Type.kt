@@ -8,10 +8,7 @@ import androidx.compose.ui.text.style.LineHeightStyle.Alignment
 import androidx.compose.ui.text.style.LineHeightStyle.Trim
 import androidx.compose.ui.unit.sp
 
-/**
- * Now in Android typography.
- */
-internal val MovieTypography = Typography(
+internal val typographyDefault = Typography(
     displayLarge = TextStyle(
         fontWeight = FontWeight.Normal,
         fontSize = 57.sp,

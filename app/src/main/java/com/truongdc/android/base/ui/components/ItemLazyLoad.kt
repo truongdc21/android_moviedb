@@ -15,8 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import com.truongdc.android.base.R
-import com.truongdc.android.base.resource.dimens.DpSize
 
 @Composable
 fun PageLoader(modifier: Modifier = Modifier) {
@@ -31,7 +31,7 @@ fun PageLoader(modifier: Modifier = Modifier) {
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
-        CircularProgressIndicator(Modifier.padding(top = DpSize.dp10))
+        CircularProgressIndicator(Modifier.padding(top = 10.dp))
     }
 }
 
@@ -40,7 +40,7 @@ fun LoadingNextPageItem(modifier: Modifier) {
     CircularProgressIndicator(
         modifier = modifier
             .fillMaxWidth()
-            .padding(DpSize.dp10)
+            .padding(10.dp)
             .wrapContentWidth(Alignment.CenterHorizontally)
     )
 }
@@ -52,7 +52,7 @@ fun ErrorMessage(
     onClickRetry: () -> Unit
 ) {
     Row(
-        modifier = modifier.padding(DpSize.dp10),
+        modifier = modifier.padding(10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {

@@ -7,7 +7,6 @@ import com.truongdc.android.base.data.local.datastores.PreferencesDataStore
 import com.truongdc.android.base.data.local.datastores.UserDataStore
 import com.truongdc.android.base.navigation.AppDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -68,11 +67,11 @@ class LoginViewModel @Inject constructor(
     }
 
     fun navigateRegister() {
-        navigator.navigateTo(AppDestination.Register())
+        appNavigator.navigateTo(AppDestination.Register())
     }
 
     fun navigateMovies() {
-        navigator.navigateTo(
+        appNavigator.navigateTo(
             route = AppDestination.MovieList(),
             popUpToRoute = AppDestination.Login.route,
             isInclusive = true,

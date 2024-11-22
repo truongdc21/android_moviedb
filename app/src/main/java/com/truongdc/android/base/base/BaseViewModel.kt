@@ -13,7 +13,7 @@ import javax.inject.Inject
 abstract class BaseViewModel<UiState, Event> : ViewModel() {
 
     @Inject
-    lateinit var navigator: AppNavigator
+    lateinit var appNavigator: AppNavigator
 
     fun <T> UiStateDelegate<UiState, Event>.launchTaskSync(
         isLoading: Boolean = false,

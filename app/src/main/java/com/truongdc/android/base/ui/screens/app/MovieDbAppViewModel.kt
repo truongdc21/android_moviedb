@@ -6,7 +6,6 @@ import com.truongdc.android.base.base.state.UiStateDelegateImpl
 import com.truongdc.android.base.data.local.datastores.PreferencesDataStore
 import com.truongdc.android.base.navigation.AppDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,12 +32,12 @@ class MovieDbAppViewModel @Inject constructor(
             try {
                 showLoading()
                 setLogout()
-                navigator.showToast("Logout success!")
+                appNavigator.showToast("Logout success!")
                 popToLogin()
                 hideLoading()
             } catch (e: Exception) {
                 e.printStackTrace()
-                navigator.showToast("Logout failed!")
+                appNavigator.showToast("Logout failed!")
                 hideLoading()
             }
         }
@@ -47,9 +46,9 @@ class MovieDbAppViewModel @Inject constructor(
     private suspend fun setLogout() = preferencesDataStore.setIsLogIn(false)
 
     private fun popToLogin() {
-        navigator.navigateTo(
+        appNavigator.navigateTo(
             route = AppDestination.Login.route,
-            popUpToRoute = navigator.currentRoute(),
+            popUpToRoute = appNavigator.currentRoute(),
             isInclusive = true
         )
     }

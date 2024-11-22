@@ -6,7 +6,6 @@ import com.truongdc.android.base.base.state.UiStateDelegateImpl
 import com.truongdc.android.base.data.local.datastores.UserDataStore
 import com.truongdc.android.base.data.model.User
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -72,7 +71,7 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun navigateBack() = navigator.navigateBack()
+    fun navigateBack() = appNavigator.navigateBack()
 
 }
 
