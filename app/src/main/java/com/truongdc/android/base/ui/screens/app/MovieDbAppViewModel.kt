@@ -6,6 +6,7 @@ import com.truongdc.android.base.base.state.UiStateDelegateImpl
 import com.truongdc.android.base.data.local.datastores.PreferencesDataStore
 import com.truongdc.android.base.navigation.AppDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,13 +19,21 @@ class MovieDbAppViewModel @Inject constructor(
     ) {
 
     data class UiState(
-        val isShowSettingDialog: Boolean = false
+        val isShowSettingDialog: Boolean = false,
+        val isLogin: Boolean? = null,
     )
 
     sealed interface Event
 
-    fun displaySettingDialog(isShowDialog: Boolean) = asyncUpdateUiState(viewModelScope) { state ->
-        state.copy(isShowSettingDialog = isShowDialog)
+    init {
+        viewModelScope.launch {
+            val isLogin = preferencesDataStore.isLogIn.first()
+            updateUiState { state -> state.copy(isLogin = isLogin) }
+        }
+    }
+
+    fun showSettingDialog(isShow: Boolean) {
+        asyncUpdateUiState(viewModelScope) { state -> state.copy(isShowSettingDialog = isShow) }
     }
 
     fun logoutAccount() {

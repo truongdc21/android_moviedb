@@ -13,6 +13,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -53,6 +54,15 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+        installSplashScreen().setKeepOnScreenCondition {
+            when (uiState) {
+                MainActivityUiState.Loading -> true
+                is MainActivityUiState.Success -> false
+            }
+        }
+
+        enableEdgeToEdge()
+
         setContent {
             val isDarkTheme = shouldDarkTheme(uiState = uiState)
             val navHostController = rememberNavController()
@@ -83,7 +93,7 @@ class MainActivity : ComponentActivity() {
 
     private fun initializeNavigation(
         navHostController: NavHostController,
-        shouldLogNavigation: Boolean = BuildConfig.DEBUG
+        shouldLogNavigation: Boolean = BuildConfig.DEBUG,
     ) {
         if (isNavigationInitialized) return
         isNavigationInitialized = true
@@ -109,7 +119,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun shouldDisableDynamicTheming(
-        uiState: MainActivityUiState
+        uiState: MainActivityUiState,
     ): Boolean = when (uiState) {
         MainActivityUiState.Loading -> false
         is MainActivityUiState.Success -> !uiState.appState.useDynamicColor
@@ -117,7 +127,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun shouldDarkTheme(
-        uiState: MainActivityUiState
+        uiState: MainActivityUiState,
     ): Boolean = when (uiState) {
         MainActivityUiState.Loading -> isSystemInDarkTheme()
         is MainActivityUiState.Success -> when (uiState.appState.darkThemeConfig) {

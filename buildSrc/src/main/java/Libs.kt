@@ -41,8 +41,11 @@ object Libs {
     }
 
     const val TIMBER = "com.jakewharton.timber:timber:${Versions.TIMBER}"
-
     const val JAVAX_INJECT = "javax.inject:javax.inject:${Versions.JAVAX_INJECT}"
+    const val CHUCKER = "com.github.chuckerteam.chucker:library:${Versions.CHUCKER}"
+    const val LOGGING_INTERCEPTOR =
+        "com.squareup.okhttp3:logging-interceptor:${Versions.LOGGING_INTERCEPTOR}"
+    const val SPLASH_SCREEN = "androidx.core:core-splashscreen:${Versions.SPLASH_SCREEN}"
 
     object Hilt {
         const val ANDROID = "com.google.dagger:hilt-android:${Versions.HILT}"
@@ -60,11 +63,6 @@ object Libs {
         const val RETROFIT = "com.squareup.retrofit2:retrofit:${Versions.RETROFIT}"
         const val RETROFIT_MOSHI = "com.squareup.retrofit2:converter-moshi:${Versions.RETROFIT}"
     }
-
-    const val CHUCKER = "com.github.chuckerteam.chucker:library:${Versions.CHUCKER}"
-
-    const val LOGGING_INTERCEPTOR =
-        "com.squareup.okhttp3:logging-interceptor:${Versions.LOGGING_INTERCEPTOR}"
 
     object Accompanist {
         const val INSETS = "com.google.accompanist:accompanist-insets:${Versions.ACCOMPANIST}"

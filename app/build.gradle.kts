@@ -137,6 +137,8 @@ dependencies {
     implementation(Libs.DataStore.DATA_STORE_PROTO)
     implementation(Libs.DataStore.DATA_STORE_PROTO_CORE)
     implementation(Libs.DataStore.DATA_STORE_PREFERENCES)
+
+    implementation(Libs.SPLASH_SCREEN)
 }
 protobuf {
     protoc {

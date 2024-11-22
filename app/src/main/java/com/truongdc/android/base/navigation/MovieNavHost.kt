@@ -13,16 +13,20 @@ import com.truongdc.android.base.ui.screens.login.LoginScreen
 import com.truongdc.android.base.ui.screens.movie_detail.compose.MovieDetailScreen
 import com.truongdc.android.base.ui.screens.movies.MovieListScreen
 import com.truongdc.android.base.ui.screens.register.RegisterScreen
-import com.truongdc.android.base.ui.screens.slpash.SplashScreen
 
 @Composable
-fun MovieNavHost(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = AppDestination.Splash()) {
-        composable(AppDestination.Splash) { SplashScreen() }
-        composable(AppDestination.MovieList) { MovieListScreen() }
-        composable(AppDestination.MovieDetail) { MovieDetailScreen() }
+fun MovieNavHost(
+    navController: NavHostController,
+    isLogin: Boolean,
+) {
+    NavHost(
+        navController = navController,
+        startDestination = if (isLogin) AppDestination.MovieList() else AppDestination.Login()
+    ) {
         composable(AppDestination.Login) { LoginScreen() }
         composable(AppDestination.Register) { RegisterScreen() }
+        composable(AppDestination.MovieList) { MovieListScreen() }
+        composable(AppDestination.MovieDetail) { MovieDetailScreen() }
     }
 }
 
