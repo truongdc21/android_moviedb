@@ -2,11 +2,11 @@ package com.truongdc.android.base
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -22,6 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import com.truongdc.android.base.common.enums.DarkThemeConfig
 import com.truongdc.android.base.common.enums.ThemeBrand
 import com.truongdc.android.base.navigation.AppNavigator
+import com.truongdc.android.base.resource.locale.Language
 import com.truongdc.android.base.resource.theme.MovieDbTheme
 import com.truongdc.android.base.ui.screens.app.MovieDbApp
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,7 +32,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var appNavigator: AppNavigator
@@ -85,6 +86,7 @@ class MainActivity : ComponentActivity() {
                 darkTheme = isDarkTheme,
                 androidTheme = shouldUseAndroidTheme(uiState),
                 disableDynamicTheming = shouldDisableDynamicTheming(uiState),
+                languageCode = shouldLanguageCode(uiState)
             ) {
                 MovieDbApp(appNavigator)
             }
@@ -104,6 +106,14 @@ class MainActivity : ComponentActivity() {
                 observerCurrentStack(lifecycleScope)
             }
         }
+    }
+
+    @Composable
+    private fun shouldLanguageCode(
+        uiState: MainActivityUiState,
+    ): String = when (uiState) {
+        MainActivityUiState.Loading -> Language.EN.languageCode
+        is MainActivityUiState.Success -> uiState.appState.language
     }
 
     @Composable
@@ -136,6 +146,7 @@ class MainActivity : ComponentActivity() {
             DarkThemeConfig.DARK -> true
         }
     }
+
 
     private val lightScrim = android.graphics.Color.argb(0xe6, 0xFF, 0xFF, 0xFF)
 

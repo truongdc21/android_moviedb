@@ -7,6 +7,7 @@ import com.truongdc.android.base.common.enums.DarkThemeConfig
 import com.truongdc.android.base.common.enums.ThemeBrand
 import com.truongdc.android.base.common.utils.collectIn
 import com.truongdc.android.base.data.repository.MainRepository
+import com.truongdc.android.base.resource.locale.Language
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -52,6 +53,12 @@ class SettingsViewModel @Inject constructor(
     fun setDynamicColor(useDynamicColor: Boolean) {
         viewModelScope.launch {
             mainRepository.setDynamicColorPreference(useDynamicColor)
+        }
+    }
+
+    fun setLanguage(language: Language) {
+        viewModelScope.launch {
+            mainRepository.setLanguage(language)
         }
     }
 }

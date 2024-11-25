@@ -9,6 +9,7 @@ import com.google.protobuf.InvalidProtocolBufferException
 import com.truongdc.android.base.common.enums.DarkThemeConfig
 import com.truongdc.android.base.common.enums.ThemeBrand
 import com.truongdc.android.base.data.model.AppState
+import com.truongdc.android.base.resource.locale.Language
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -43,6 +44,7 @@ class AppStateDataStoreImpl @Inject constructor(
             userProto.toBuilder().setThemeBrand(appState.themeBrand.name)
                 .setDarkThemeConfig(appState.darkThemeConfig.name)
                 .setUseDynamicColor(appState.useDynamicColor.toString())
+                .setLanguage(appState.language)
                 .build()
         }
     }
@@ -57,6 +59,9 @@ class AppStateDataStoreImpl @Inject constructor(
                     userProto.darkThemeConfig
                 ),
                 useDynamicColor = userProto.useDynamicColor.toBoolean(),
+                language = if (userProto.language.isBlank()) Language.EN.languageCode else Language.fromCode(
+                    userProto.language
+                ).languageCode
             )
         }
     }

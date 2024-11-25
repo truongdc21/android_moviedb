@@ -4,13 +4,8 @@ package com.truongdc.android.base.ui.screens.movies
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridScope
@@ -21,23 +16,23 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.ScaffoldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.truongdc.android.base.R
 import com.truongdc.android.base.base.compose.UiStateContent
 import com.truongdc.android.base.data.model.Movie
 import com.truongdc.android.base.resource.dimens.Orientation
 import com.truongdc.android.base.resource.dimens.isGreaterThanCompact
-import com.truongdc.android.base.resource.dimens.isGreaterThanMedium
 import com.truongdc.android.base.resource.theme.AppTheme
 import com.truongdc.android.base.ui.components.ErrorMessage
 import com.truongdc.android.base.ui.components.LoadingNextPageItem
@@ -174,7 +169,7 @@ private fun MovieTopBar(showSetting: () -> Unit) {
     TopAppBar(
         title = {
             Text(
-                text = "MOVIE APP",
+                text = stringResource(id = R.string.movie_app).uppercase(),
                 style = AppTheme.styles.titleMedium,
                 color = AppTheme.colors.onPrimary,
                 textAlign = TextAlign.Center,

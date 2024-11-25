@@ -15,7 +15,7 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -32,6 +32,8 @@ import com.truongdc.android.base.resource.dimens.largeDimensions
 import com.truongdc.android.base.resource.dimens.mediumDimensions
 import com.truongdc.android.base.resource.dimens.rememberWindowSizeClass
 import com.truongdc.android.base.resource.dimens.smallDimensions
+import com.truongdc.android.base.resource.locale.Language
+import com.truongdc.android.base.resource.locale.LocalLanguages
 
 /**
  * Light default theme color scheme
@@ -199,6 +201,7 @@ fun MovieDbTheme(
     androidTheme: Boolean = false,
     disableDynamicTheming: Boolean = true,
     windowSizeClass: WindowSizeClass = rememberWindowSizeClass(),
+    languageCode: String = Language.EN.languageCode,
     content: @Composable () -> Unit,
 ) {
     // Color scheme
@@ -267,6 +270,9 @@ fun MovieDbTheme(
         else -> WindowType.Large
     }
 
+    // Config languages
+    val language = Language.fromCode(languageCode)
+
     // Composition locals
     CompositionLocalProvider(
         LocalGradientColors provides gradientColors,
@@ -275,12 +281,17 @@ fun MovieDbTheme(
         LocalAppDimens provides dimensions,
         LocalOrientationMode provides orientation,
         LocalWindowType provides windowType,
+        LocalLanguages provides language,
     ) {
-        MaterialTheme(
-            colorScheme = colorScheme,
-            typography = typographyDefault,
-            content = content,
-        )
+        // Using `key(languageCode)` ensures that MaterialTheme is recomposed whenever
+        // the languageCode changes, updating the UI with the new language settings.
+        key(languageCode) {
+            MaterialTheme(
+                colorScheme = colorScheme,
+                typography = typographyDefault,
+                content = content,
+            )
+        }
     }
 }
 
@@ -323,5 +334,9 @@ object AppTheme {
     val tintTheme: TintTheme
         @Composable
         get() = LocalTintTheme.current
+
+    val language: Language
+        @Composable
+        get() = LocalLanguages.current
 
 }
