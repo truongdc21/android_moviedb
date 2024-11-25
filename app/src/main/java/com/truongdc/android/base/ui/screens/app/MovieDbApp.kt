@@ -11,7 +11,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.truongdc.android.base.R
 import com.truongdc.android.base.base.compose.UiStateContent
 import com.truongdc.android.base.navigation.AppNavigator
 import com.truongdc.android.base.navigation.MovieNavHost
@@ -24,6 +26,7 @@ fun MovieDbApp(
     navigator: AppNavigator,
     viewModel: MovieDbAppViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val hasLaunched = rememberSaveable { mutableStateOf(false) }
     UiStateContent(
@@ -48,7 +51,7 @@ fun MovieDbApp(
         if (!hasLaunched.value) {
             LaunchedEffect(Unit) {
                 navigator.showSnackBar(
-                    message = "Welcome to MovieDb",
+                    message = context.getString(R.string.welcome_to_movie_app),
                     withDismissAction = true,
                     duration = SnackbarDuration.Short
                 )

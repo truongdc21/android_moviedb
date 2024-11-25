@@ -19,13 +19,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.truongdc.android.base.R
 import com.truongdc.android.base.base.compose.UiStateContent
 import com.truongdc.android.base.common.extensions.showToast
 import com.truongdc.android.base.data.model.User
@@ -49,12 +49,12 @@ fun RegisterScreen(
         onEventEffect = { event ->
             when (event) {
                 RegisterViewModel.Event.RegisterSuccess -> {
-                    context.showToast("Register Success!")
+                    context.showToast(context.getString(R.string.register_success))
                     viewModel.navigateBack()
                 }
 
                 RegisterViewModel.Event.RegisterFailed -> {
-                    context.showToast("Register Failed, Please try again!")
+                    context.showToast(context.getString(R.string.register_failed_please_try_again))
                 }
             }
         }, content = { uiState ->
@@ -108,12 +108,12 @@ private fun RegisterContent(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Create Account",
+                text = stringResource(id = R.string.create_account),
                 style = AppTheme.styles.displaySmall,
                 color = AppTheme.colors.onPrimary
             )
             Text(
-                text = "Create account to login",
+                text = stringResource(id = R.string.register_account_to_login),
                 style = AppTheme.styles.bodyLarge,
                 color = AppTheme.colors.onPrimary
             )
@@ -121,7 +121,7 @@ private fun RegisterContent(
                 PrimaryTextField(
                     value = email,
                     onValueChange = onEmailChange,
-                    textPlaceholder = "Mail ID",
+                    textPlaceholder = stringResource(id = R.string.mail_id),
                     paddingValues = PaddingValues(
                         top = if (AppTheme.orientation.isLandscape()) 10.dp else 50.dp
                     )
@@ -129,7 +129,7 @@ private fun RegisterContent(
                 PrimaryTextField(
                     value = name,
                     onValueChange = onNameChange,
-                    textPlaceholder = "Full Name",
+                    textPlaceholder = stringResource(id = R.string.fullname),
                     paddingValues = PaddingValues(
                         top = if (AppTheme.orientation.isLandscape()) 10.dp else 20.dp
                     )
@@ -139,14 +139,14 @@ private fun RegisterContent(
                     PrimaryTextField(
                         value = email,
                         onValueChange = onEmailChange,
-                        textPlaceholder = "Mail ID",
+                        textPlaceholder = stringResource(id = R.string.mail_id),
                         modifier = Modifier.weight(1f)
                     )
                     Spacer(modifier = Modifier.size(10.dp))
                     PrimaryTextField(
                         value = name,
                         onValueChange = onNameChange,
-                        textPlaceholder = "Full Name",
+                        textPlaceholder = stringResource(id = R.string.fullname),
                         modifier = Modifier.weight(1f)
                     )
                 }
@@ -154,7 +154,7 @@ private fun RegisterContent(
             PrimaryTextField(
                 value = pass,
                 onValueChange = onPassChange,
-                textPlaceholder = "Password",
+                textPlaceholder = stringResource(id = R.string.password),
                 isPassWord = true,
                 paddingValues = PaddingValues(
                     top = if (AppTheme.orientation.isLandscape()) 10.dp else 20.dp
@@ -170,12 +170,12 @@ private fun RegisterContent(
                 onClick = {
                     onSubmitRegister(User(name, email, pass))
                 },
-                label = "Register", isEnable = !isInValid,
+                label = stringResource(id = R.string.register), isEnable = !isInValid,
             )
             Spacer(modifier = Modifier.weight(1f))
             if (AppTheme.orientation.isPortrait())
                 Text(
-                    text = "LOGIN",
+                    text = stringResource(id = R.string.login).uppercase(),
                     style = AppTheme.styles.bodyLarge.copy(
                         textDecoration = TextDecoration.Underline
                     ),

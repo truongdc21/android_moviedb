@@ -7,4 +7,5 @@ message AppStateProto {
   string themeBrand = 1;
   string darkThemeConfig = 2;
   string useDynamicColor = 3;
+  string language = 4;
 }

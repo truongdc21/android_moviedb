@@ -23,11 +23,13 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.truongdc.android.base.R
 import com.truongdc.android.base.base.compose.UiStateContent
 import com.truongdc.android.base.common.extensions.showToast
 import com.truongdc.android.base.resource.dimens.isLandscape
@@ -49,12 +51,12 @@ fun LoginScreen(
     UiStateContent(viewModel = viewModel, modifier = Modifier, onEventEffect = { event ->
         when (event) {
             LoginViewModel.Event.LoginSuccess -> {
-                context.showToast("Login Success!")
+                context.showToast(context.getString(R.string.login_success))
                 viewModel.navigateMovies()
             }
 
             LoginViewModel.Event.LoginFailed -> {
-                context.showToast("Login Failed, Please try again!")
+                context.showToast(context.getString(R.string.login_failed_please_try_again))
             }
         }
     }, content = { uiState ->
@@ -108,19 +110,19 @@ private fun LoginContent(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Welcome Back!",
+                text = stringResource(id = R.string.welcome_back),
                 style = AppTheme.styles.displaySmall,
                 color = AppTheme.colors.onPrimary
             )
             Text(
-                text = "Login to continue",
+                text = stringResource(id = R.string.login_to_continue),
                 style = AppTheme.styles.bodyLarge,
                 color = AppTheme.colors.onPrimary
             )
             PrimaryTextField(
                 value = email,
                 onValueChange = { email -> onEmailChange((email)) },
-                textPlaceholder = "Mail ID",
+                textPlaceholder = stringResource(id = R.string.mail_id),
                 paddingValues = PaddingValues(
                     top = if (AppTheme.orientation.isLandscape()) 10.dp else 50.dp
                 )
@@ -128,7 +130,7 @@ private fun LoginContent(
             PrimaryTextField(
                 value = pass,
                 onValueChange = { pass -> onPassChange(pass) },
-                textPlaceholder = "Password",
+                textPlaceholder = stringResource(id = R.string.password),
                 isPassWord = true,
                 paddingValues = PaddingValues(
                     top = if (AppTheme.orientation.isLandscape()) 10.dp else 20.dp
@@ -140,7 +142,7 @@ private fun LoginContent(
                 )
             )
             Text(
-                text = "Forget Password?",
+                text = stringResource(id = R.string.forget_password),
                 style = AppTheme.styles.bodyLarge.copy(
                     textDecoration = TextDecoration.Underline
                 ),
@@ -152,7 +154,7 @@ private fun LoginContent(
                 )
             )
             PrimaryButton(
-                label = "Login",
+                label = stringResource(id = R.string.login),
                 isEnable = !inValid,
                 onClick = {
                     keyboardController?.hide()
@@ -161,7 +163,7 @@ private fun LoginContent(
             Spacer(modifier = Modifier.weight(1f))
             if (AppTheme.orientation.isPortrait())
                 Text(
-                    text = "CREATE ACCOUNT",
+                    text = stringResource(id = R.string.create_account).uppercase(),
                     style = AppTheme.styles.bodyLarge.copy(
                         textDecoration = TextDecoration.Underline
                     ),
@@ -200,4 +202,3 @@ private fun Preview() {
         )
     }
 }
-
