@@ -6,7 +6,7 @@ import com.truongdc.movie_tmdb.core.model.Movie
 import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
-    suspend fun getMovies(): DataResult<Flow<PagingData<Movie>>>
+    suspend fun fetchMovies(): DataResult<Flow<PagingData<Movie>>>
 
-    suspend fun getDetailMovies(movieId: Int): DataResult<Movie>
+    suspend fun fetchDetailMovies(movieId: Int): DataResult<Movie>
 }

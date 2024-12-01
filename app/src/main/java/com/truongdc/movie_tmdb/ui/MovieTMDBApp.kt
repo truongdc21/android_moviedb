@@ -12,26 +12,39 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.truongdc.movie_tmdb.core.navigation.AppNavigator
-import com.truongdc.movie_tmdb.feature.setting.SettingsDialog
-import com.truongdc.movie_tmdb.core.ui.UiStateContent
 import com.truongdc.movie_tmdb.R
+import com.truongdc.movie_tmdb.core.navigation.AppNavigator
+import com.truongdc.movie_tmdb.core.navigation.HandleNavigationIntents
+import com.truongdc.movie_tmdb.core.ui.UiStateContent
+import com.truongdc.movie_tmdb.core.ui.extensions.showToast
+import com.truongdc.movie_tmdb.feature.login.navigation.LoginRouter
+import com.truongdc.movie_tmdb.feature.movie_list.navigation.MovieListRouter
+import com.truongdc.movie_tmdb.feature.setting.SettingsDialog
 import com.truongdc.movie_tmdb.navigation.MovieNavHost
-import com.truongdc.movie_tmdb.navigation.NavigationIntentListener
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MovieTMDBApp(
     navigator: AppNavigator,
-    viewModel: MovieTMDBAppViewModel = hiltViewModel()
+    viewModel: MovieTMDBAppViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
     val hasLaunched = rememberSaveable { mutableStateOf(false) }
     UiStateContent(
-        viewModel = viewModel,
+        uiStateDelegate = viewModel,
         modifier = Modifier,
-        onEventEffect = {},
+        onEventEffect = { event ->
+            when (event) {
+                MovieTMDBAppViewModel.Event.LogoutSuccess -> {
+                    navigator.navigateTo(
+                        route = LoginRouter,
+                        popUpToRoute = MovieListRouter,
+                        inclusive = true
+                    )
+                }
+            }
+        },
     ) { uiState ->
         if (uiState.isShowSettingDialog) {
             SettingsDialog(
@@ -39,17 +52,29 @@ fun MovieTMDBApp(
                     viewModel.logoutAccount()
                 },
                 onDismiss = {
-                    viewModel.showSettingDialog(false)
+                    viewModel.toggleSettingDialog(false)
                 })
         }
-        NavigationIntentListener(
+        HandleNavigationIntents(
             navigator = navigator,
-            snackbarHostState = snackbarHostState,
-            showSettingDialog = viewModel::showSettingDialog
+            displayToastMessage = { message ->
+                context.showToast(message)
+            },
+            displaySnackBar = { message, actionLabel, withDismissAction ->
+                snackbarHostState.showSnackbar(
+                    message = message,
+                    actionLabel = actionLabel,
+                    withDismissAction = withDismissAction
+                )
+            },
+            toggleSettingDialogVisibility = viewModel::toggleSettingDialog,
+            toggleForceUpdateDialog = {},
+            toggleMaintenanceMode = {},
+            toggleLogoutDialogVisibility = {},
         )
         if (!hasLaunched.value) {
             LaunchedEffect(Unit) {
-                navigator.showSnackBar(
+                navigator.displaySnackBar(
                     message = context.getString(R.string.welcome_to_movie_app),
                     withDismissAction = true,
                     duration = 0,
@@ -62,8 +87,8 @@ fun MovieTMDBApp(
         ) {
             uiState.isLogin?.let { isLogin ->
                 MovieNavHost(
-                    navigator.navController,
-                    isLogin,
+                    navigator = navigator,
+                    isLogin = isLogin,
                 )
             }
         }

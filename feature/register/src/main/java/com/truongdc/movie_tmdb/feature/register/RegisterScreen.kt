@@ -39,16 +39,17 @@ import com.truongdc.movie_tmdb.core.ui.extensions.showToast
 @Composable
 fun RegisterScreen(
     viewModel: RegisterViewModel = hiltViewModel(),
+    onNavigateBack: () -> Unit = {}
 ) {
     val context = LocalContext.current
     UiStateContent(
-        viewModel = viewModel,
+        uiStateDelegate = viewModel,
         modifier = Modifier,
         onEventEffect = { event ->
             when (event) {
                 RegisterViewModel.Event.RegisterSuccess -> {
                     context.showToast(context.getString(string.register_success))
-                    viewModel.navigateBack()
+                    onNavigateBack.invoke()
                 }
 
                 RegisterViewModel.Event.RegisterFailed -> {
@@ -67,7 +68,7 @@ fun RegisterScreen(
                 onNameChange = viewModel::onNameChange,
                 onPassChange = viewModel::onPassChange,
                 onSubmitRegister = viewModel::onSubmitRegister,
-                onNavigateBack = viewModel::navigateBack
+                onNavigateBack = onNavigateBack
             )
         })
 }

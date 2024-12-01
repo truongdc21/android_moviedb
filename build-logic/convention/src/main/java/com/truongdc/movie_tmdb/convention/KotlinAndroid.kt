@@ -26,6 +26,12 @@ internal fun Project.configureKotlinAndroid(
             minSdk = 24
         }
 
+        buildFeatures {
+            // Enable buildConfig to generate the
+            // BuildConfig class for accessing build variables.
+            buildConfig = true
+        }
+
         compileOptions {
             // Up to Java 11 APIs are available through desugaring
             // https://developer.android.com/studio/write/java11-minimal-support-table
@@ -75,6 +81,11 @@ private inline fun <reified T : KotlinTopLevelExtension> Project.configureKotlin
             "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
         )
         freeCompilerArgs.add(
+            // This line adds the `-Xcontext-receivers` compiler argument,
+            // enabling the experimental context receivers feature in Kotlin.
+            // This feature allows passing implicit receivers to functions, potentially
+            // reducing boilerplate code.
+            // example: context(ViewModel) fun foo() {}
             "-Xcontext-receivers",
         )
     }

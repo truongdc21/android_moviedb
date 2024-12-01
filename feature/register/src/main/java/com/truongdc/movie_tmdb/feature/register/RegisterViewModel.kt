@@ -70,8 +70,4 @@ class RegisterViewModel @Inject constructor(
             }
         }
     }
-
-    fun navigateBack() = appNavigator.navigateBack()
-
 }
-

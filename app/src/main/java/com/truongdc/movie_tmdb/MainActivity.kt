@@ -19,12 +19,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.truongdc.movie_tmdb.ui.MovieTMDBApp
 import com.truongdc.movie_tmdb.core.designsystem.theme.MovieTMDBTheme
 import com.truongdc.movie_tmdb.core.model.DarkThemeConfig
 import com.truongdc.movie_tmdb.core.model.Language
 import com.truongdc.movie_tmdb.core.model.ThemeBrand
 import com.truongdc.movie_tmdb.core.navigation.AppNavigator
+import com.truongdc.movie_tmdb.ui.MovieTMDBApp
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initializeNavigation(
         navHostController: NavHostController,
-        shouldLogNavigation: Boolean = true,
+        shouldLogNavigation: Boolean = BuildConfig.DEBUG,
     ) {
         if (isNavigationInitialized) return
         isNavigationInitialized = true

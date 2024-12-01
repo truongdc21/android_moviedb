@@ -12,12 +12,4 @@ object Builds {
         const val isShrinkResources = false
         const val isDebuggable = true
     }
-
-    const val SHARED_DIMENSION = "default"
-
-    object Flavors {
-        const val DEV = "dev"
-        const val STG = "stg"
-        const val PROD = "prod"
-    }
 }

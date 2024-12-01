@@ -1,13 +1,11 @@
 package com.truongdc.movie_tmdb.feature.movie_list
 
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.truongdc.movie_tmdb.core.data.repository.MovieRepository
 import com.truongdc.movie_tmdb.core.model.Movie
-import com.truongdc.movie_tmdb.core.navigation.AppDestination
 import com.truongdc.movie_tmdb.core.state.CombinedStateDelegateImpl
 import com.truongdc.movie_tmdb.core.state.asyncUpdateInternalState
 import com.truongdc.movie_tmdb.core.viewmodel.CombinedStateViewModel
@@ -27,7 +25,6 @@ class MovieListViewModel @Inject constructor(
 
     data class UiState(
         val flowPagingMovie: Flow<PagingData<Movie>>? = null,
-        val lazyListState: LazyListState = LazyListState(),
         val lazyGridState: LazyGridState = LazyGridState()
     )
 
@@ -45,19 +42,9 @@ class MovieListViewModel @Inject constructor(
     private fun requestMovie() {
         launchTaskSync(onRequest = {
             internalState
-            movieRepository.getMovies()
+            movieRepository.fetchMovies()
         }, onSuccess = { mFlowPagingMovie ->
             asyncUpdateInternalState { state -> state.copy(flowPagingMovie = mFlowPagingMovie) }
         })
-    }
-
-    fun navigateToMovieDetail(movieId: Int) {
-        appNavigator.navigateTo(
-            route = AppDestination.MovieDetail(movieId.toString())
-        )
-    }
-
-    fun showSettingDialog(isShowDialog: Boolean = true) {
-        appNavigator.showSettingDialog(isShowDialog)
     }
 }

@@ -22,11 +22,13 @@ import com.truongdc.movie_tmdb.core.ui.UiStateContent
 @Composable
 fun MovieDetailScreen(
     viewModel: MovieDetailViewModel = hiltViewModel(),
+    onNavigateBack: () -> Unit = {},
 ) {
     UiStateContent(
-        viewModel = viewModel,
+        uiStateDelegate = viewModel,
         modifier = Modifier,
         onEventEffect = {},
+        onDismissErrorDialog = onNavigateBack,
         content = { uiState ->
             uiState.movie?.let {
                 MovieDetailContent(uiState.movie)

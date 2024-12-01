@@ -2,10 +2,8 @@ package com.truongdc.movie_tmdb.ui
 
 import androidx.lifecycle.viewModelScope
 import com.truongdc.movie_tmdb.core.data.repository.MainRepository
-import com.truongdc.movie_tmdb.core.navigation.AppDestination
 import com.truongdc.movie_tmdb.core.state.UiStateDelegateImpl
 import com.truongdc.movie_tmdb.core.viewmodel.UiStateViewModel
-
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -24,7 +22,9 @@ class MovieTMDBAppViewModel @Inject constructor(
         val isLogin: Boolean? = null,
     )
 
-    sealed interface Event
+    sealed interface Event {
+        data object LogoutSuccess : Event
+    }
 
     init {
         viewModelScope.launch {
@@ -33,7 +33,7 @@ class MovieTMDBAppViewModel @Inject constructor(
         }
     }
 
-    fun showSettingDialog(isShow: Boolean) {
+    fun toggleSettingDialog(isShow: Boolean) {
         asyncUpdateUiState(viewModelScope) { state -> state.copy(isShowSettingDialog = isShow) }
     }
 
@@ -42,24 +42,19 @@ class MovieTMDBAppViewModel @Inject constructor(
             try {
                 showLoading()
                 setLogout()
-                appNavigator.showToast("Logout success!")
-                popToLogin()
+                appNavigator.displayToastMessage("Logout success!")
+                sendEvent(Event.LogoutSuccess)
                 hideLoading()
             } catch (e: Exception) {
                 e.printStackTrace()
-                appNavigator.showToast("Logout failed!")
+                appNavigator.displayToastMessage("Logout failed!")
                 hideLoading()
             }
         }
     }
 
-    private suspend fun setLogout() = mainRepository.setIsLogin(false)
-
-    private fun popToLogin() {
-        appNavigator.navigateTo(
-            route = AppDestination.Login.route,
-            popUpToRoute = appNavigator.currentRoute(),
-            isInclusive = true
-        )
+    private suspend fun setLogout() {
+        mainRepository.setIsLogin(false)
     }
+
 }
