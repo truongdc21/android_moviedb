@@ -1,3 +1,123 @@
+plugins {
+    alias(libs.plugins.movieTMDB.android.application)
+    alias(libs.plugins.movieTMDB.android.application.compose)
+    alias(libs.plugins.movieTMDB.android.application.flavors)
+    alias(libs.plugins.movieTMDB.android.application.jacoco)
+    alias(libs.plugins.movieTMDB.hilt)
+    alias(libs.plugins.baselineprofile)
+    alias(libs.plugins.roborazzi)
+    alias(libs.plugins.kotlin.serialization)
+    //id("movie_tmdb.android.application.firebase")
+    //id("com.google.android.gms.oss-licenses-plugin")
+}
+
+android {
+    namespace = Configs.NAMESPACE
+
+    defaultConfig {
+        applicationId = Configs.APP_ID
+        versionCode = Configs.VERSION_CODE
+        versionName = Configs.VERSION_NAME
+
+        testInstrumentationRunner = Configs.ANDROID_JUNIT_RUNNER
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+    }
+
+    buildTypes {
+        getByName(Builds.Release.name) {
+            isMinifyEnabled = Builds.Release.isMinifyEnabled
+            isShrinkResources = Builds.Release.isShrinkResources
+            signingConfig = signingConfigs[Builds.Debug.name]
+            isDebuggable = Builds.Release.isDebuggable
+            proguardFiles(getDefaultProguardFile(Configs.PROGUARD_FILE), Configs.PROGUARD_RULES)
+        }
+
+        getByName(Builds.Debug.name) {
+            isMinifyEnabled = Builds.Debug.isMinifyEnabled
+            isShrinkResources = Builds.Debug.isShrinkResources
+            signingConfig = signingConfigs[Builds.Debug.name]
+            isDebuggable = Builds.Debug.isDebuggable
+            proguardFiles(getDefaultProguardFile(Configs.PROGUARD_FILE), Configs.PROGUARD_RULES)
+        }
+    }
+    packaging {
+        resources {
+            excludes.add("/META-INF/{AL2.0,LGPL2.1}")
+        }
+    }
+    @Suppress("UnstableApiUsage")
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
+}
+
+dependencies {
+    implementation(projects.feature.login)
+    implementation(projects.feature.register)
+    implementation(projects.feature.movieList)
+    implementation(projects.feature.movieDetail)
+    implementation(projects.feature.settings)
+
+    implementation(projects.core.data)
+    implementation(projects.core.model)
+    implementation(projects.core.common)
+    implementation(projects.core.designsystem)
+    implementation(projects.core.navigation)
+    implementation(projects.core.viewmodel)
+    implementation(projects.core.ui)
+
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.compose.material3.adaptive)
+    implementation(libs.androidx.compose.material3.adaptive.layout)
+    implementation(libs.androidx.compose.material3.adaptive.navigation)
+    implementation(libs.androidx.compose.material3.windowSizeClass)
+    implementation(libs.androidx.compose.runtime.tracing)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.lifecycle.runtimeCompose)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.profileinstaller)
+    implementation(libs.androidx.tracing.ktx)
+    implementation(libs.androidx.window.core)
+    implementation(libs.kotlinx.coroutines.guava)
+    implementation(libs.coil.kt)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.timber)
+
+    ksp(libs.hilt.compiler)
+    kspTest(libs.hilt.compiler)
+
+    debugImplementation(libs.androidx.compose.ui.testManifest)
+
+    testImplementation(libs.hilt.android.testing)
+    testImplementation(libs.kotlin.test)
+
+    testDevelopImplementation(libs.robolectric)
+    testDevelopImplementation(libs.roborazzi)
+
+    androidTestImplementation(kotlin("test"))
+    androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(libs.androidx.navigation.testing)
+    androidTestImplementation(libs.androidx.compose.ui.test)
+    androidTestImplementation(libs.hilt.android.testing)
+}
+
+baselineProfile {
+    // Don't build on every iteration of a full assemble.
+    // Instead enable generation directly for the release build variant.
+    automaticGenerationDuringBuild = false
+
+    // Make use of Dex Layout Optimizations via Startup Profiles
+    dexLayoutOptimization = true
+}
+
+/*
 import com.google.protobuf.gradle.id
 
 plugins {
@@ -161,3 +281,5 @@ protobuf {
         }
     }
 }
+
+ */

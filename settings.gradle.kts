@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google()
         mavenCentral()
@@ -12,6 +13,25 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+rootProject.name = "android_movie_tmdb"
 
-rootProject.name = "Android Movie DB"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 include(":app")
+include(":core:data")
+include(":core:model")
+include(":core:common")
+include(":core:network")
+include(":core:datastore")
+include(":core:datastore-proto")
+include(":core:designsystem")
+include(":core:navigation")
+include(":core:state")
+include(":core:viewmodel")
+include(":core:ui")
+
+include(":feature:login")
+include(":feature:register")
+include(":feature:movie_list")
+include(":feature:movie_detail")
+include(":feature:settings")
