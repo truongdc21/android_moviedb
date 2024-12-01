@@ -29,7 +29,7 @@ fun <R> UiStateDelegate<R, *>.collectLoadingWithLifecycle(
 )
 
 @Composable
-fun <State, Event> UiStateDelegate<State, Event>.CollectEventEffect(
+fun <State, Event> UiStateDelegate<State, Event>.collectEventEffect(
     lifecycleOwner: LifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current,
     lifecycleState: Lifecycle.State = Lifecycle.State.RESUMED,
     vararg keys: Any?,
@@ -42,7 +42,7 @@ fun <State, Event> UiStateDelegate<State, Event>.CollectEventEffect(
 }
 
 @Composable
-fun UiStateDelegate<*, *>.CollectErrorEffect(
+fun UiStateDelegate<*, *>.collectErrorEffect(
     lifecycleOwner: LifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current,
     lifecycleState: Lifecycle.State = Lifecycle.State.RESUMED,
     vararg keys: Any?,

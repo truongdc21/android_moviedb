@@ -2,7 +2,6 @@ package com.truongdc.movie_tmdb.feature.login
 
 import androidx.lifecycle.viewModelScope
 import com.truongdc.movie_tmdb.core.data.repository.MainRepository
-import com.truongdc.movie_tmdb.core.navigation.AppDestination
 import com.truongdc.movie_tmdb.core.state.UiStateDelegateImpl
 import com.truongdc.movie_tmdb.core.viewmodel.UiStateViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -62,21 +61,5 @@ class LoginViewModel @Inject constructor(
                 hideLoading()
             }
         }
-    }
-
-    fun navigateRegister() {
-        appNavigator.navigateTo(AppDestination.Register())
-    }
-
-    fun onForgetPassword() {
-        appNavigator.showSettingDialog(true)
-    }
-
-    fun navigateMovies() {
-        appNavigator.navigateTo(
-            route = AppDestination.MovieList(),
-            popUpToRoute = AppDestination.Login.route,
-            isInclusive = true,
-        )
     }
 }

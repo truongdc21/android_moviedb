@@ -40,24 +40,24 @@ import com.truongdc.movie_tmdb.feature.movie_list.components.MovieItem
 @Composable
 fun MovieListScreen(
     viewModel: MovieListViewModel = hiltViewModel(),
+    onNavigateToDetail: (Movie) -> Unit = {},
+    onShowSettingDialog: () -> Unit = {},
 ) {
     UiStateContent(
-        viewModel = viewModel,
+        uiStateDelegate = viewModel,
         modifier = Modifier,
         onEventEffect = {}
     ) { uiState ->
         Scaffold(
             topBar = {
                 if (AppTheme.orientation == Orientation.Portrait) {
-                    MovieTopBar { viewModel.showSettingDialog() }
+                    MovieTopBar { onShowSettingDialog.invoke() }
                 }
             },
             floatingActionButton = {
                 if (AppTheme.orientation == Orientation.Landscape) {
                     FloatingActionButton(
-                        onClick = {
-                            viewModel.showSettingDialog()
-                        },
+                        onClick = { onShowSettingDialog.invoke() },
                         content = { Icon(Icons.Filled.Settings, contentDescription = null) }
                     )
                 }
@@ -66,7 +66,7 @@ fun MovieListScreen(
             MoviesContent(
                 paddingValues = paddingValues,
                 uiState = uiState,
-                onTapMovie = viewModel::navigateToMovieDetail
+                onTapMovie = onNavigateToDetail
             )
         }
     }
@@ -76,7 +76,7 @@ fun MovieListScreen(
 private fun MoviesContent(
     paddingValues: PaddingValues,
     uiState: MovieListViewModel.UiState,
-    onTapMovie: (Int) -> Unit,
+    onTapMovie: (Movie) -> Unit,
 ) {
 
     uiState.flowPagingMovie?.let { pagingData ->

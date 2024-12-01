@@ -15,7 +15,7 @@ class MovieRepositoryImpl @Inject constructor(
     private val movieNetWork: MovieNetworkDataSource,
     @IoDispatcher dispatcherIO: CoroutineDispatcher
 ) : ExecuteResult(dispatcherIO), MovieRepository {
-    override suspend fun getMovies() = withResultContext {
+    override suspend fun fetchMovies() = withResultContext {
         Pager(
             config = PagingConfig(pageSize = Constants.MAX_PAGE_SIZE, prefetchDistance = 2),
             pagingSourceFactory = {
@@ -24,7 +24,7 @@ class MovieRepositoryImpl @Inject constructor(
         ).flow
     }
 
-    override suspend fun getDetailMovies(movieId: Int) = withResultContext {
+    override suspend fun fetchDetailMovies(movieId: Int) = withResultContext {
         movieNetWork.fetchMovieDetail(movieId)
     }
 }

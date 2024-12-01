@@ -14,10 +14,29 @@ enum class FlavorDimension {
 // purposes, or from a production backend server which supplies up-to-date, real content.
 // These two product flavors reflect this behaviour.
 @Suppress("EnumEntryName")
-enum class AppFlavor(val dimension: FlavorDimension, val applicationIdSuffix: String? = null) {
-    develop(FlavorDimension.contentType, applicationIdSuffix = ".dev"),
-    staging(FlavorDimension.contentType, applicationIdSuffix = ".stg"),
-    production(FlavorDimension.contentType)
+enum class AppFlavor(
+    val dimension: FlavorDimension,
+    val applicationIdSuffix: String? = null,
+    val appName: String,
+    val baseApiUrl: String,
+) {
+    develop(
+        dimension = FlavorDimension.contentType,
+        applicationIdSuffix = ".dev",
+        appName = "Movie Dev",
+        baseApiUrl = "https://api.themoviedb.org/3/"
+    ),
+    staging(
+        dimension = FlavorDimension.contentType,
+        applicationIdSuffix = ".stg",
+        appName = "Movie Stg",
+        baseApiUrl = "https://api.themoviedb.org/3/"
+    ),
+    production(
+        dimension = FlavorDimension.contentType,
+        appName = "Movie TMDB",
+        baseApiUrl = "https://api.themoviedb.org/3/"
+    )
 }
 
 fun configureFlavors(
@@ -36,6 +55,8 @@ fun configureFlavors(
                             applicationIdSuffix = it.applicationIdSuffix
                         }
                     }
+                    resValue("string", "app_name", "\"${it.appName}\"")
+                    buildConfigField("String", "BASE_API_URL", "\"${it.baseApiUrl}\"")
                 }
             }
         }

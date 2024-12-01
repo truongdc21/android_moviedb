@@ -4,9 +4,11 @@ import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
 @Parcelize
 @JsonClass(generateAdapter = true)
+@Serializable
 data class Movie(
     @Json(name = "id")
     var id: Int = -1,

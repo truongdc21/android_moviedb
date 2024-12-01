@@ -36,7 +36,6 @@ import com.truongdc.movie_tmdb.core.designsystem.components.PrimaryButton
 import com.truongdc.movie_tmdb.core.designsystem.components.PrimaryTextField
 import com.truongdc.movie_tmdb.core.designsystem.theme.AppTheme
 import com.truongdc.movie_tmdb.core.designsystem.theme.MovieTMDBTheme
-import com.truongdc.movie_tmdb.core.navigation.AppDestination
 import com.truongdc.movie_tmdb.core.ui.UiStateContent
 import com.truongdc.movie_tmdb.core.ui.extensions.showToast
 
@@ -44,16 +43,17 @@ import com.truongdc.movie_tmdb.core.ui.extensions.showToast
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
+    onLoginSuccess: () -> Unit = {},
+    onNavigateToRegister: () -> Unit = {},
 ) {
-    AppDestination
     val context = LocalContext.current
     val view = LocalView.current
     ObserverKeyBoard(view) { viewModel.onUpdateTextFiledFocus(it) }
-    UiStateContent(viewModel = viewModel, modifier = Modifier, onEventEffect = { event ->
+    UiStateContent(uiStateDelegate = viewModel, modifier = Modifier, onEventEffect = { event ->
         when (event) {
             LoginViewModel.Event.LoginSuccess -> {
                 context.showToast(context.getString(string.login_success))
-                viewModel.navigateMovies()
+                onLoginSuccess.invoke()
             }
 
             LoginViewModel.Event.LoginFailed -> {
@@ -69,8 +69,8 @@ fun LoginScreen(
             onEmailChange = viewModel::onEmailChange,
             onPassChange = viewModel::onPassChange,
             onSubmitLogin = viewModel::onSubmitLogin,
-            onNavigateRegister = viewModel::navigateRegister,
-            onForgetPassword = viewModel::onForgetPassword
+            onNavigateRegister = onNavigateToRegister,
+            onForgetPassword = {}
         )
     })
 }

@@ -58,7 +58,7 @@ fun SettingsDialog(
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     UiStateContent(
-        viewModel = viewModel,
+        uiStateDelegate = viewModel,
         modifier = Modifier,
         onEventEffect = {},
         content = { uiState ->

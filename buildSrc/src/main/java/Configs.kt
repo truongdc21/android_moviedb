@@ -14,5 +14,4 @@ object Configs {
 
     const val PROGUARD_FILE = "proguard-android-optimize.txt"
     const val PROGUARD_RULES = "proguard-rules.pro"
-
 }

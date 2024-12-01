@@ -33,11 +33,11 @@ import com.truongdc.movie_tmdb.core.designsystem.theme.MovieTMDBTheme
 import com.truongdc.movie_tmdb.core.model.Movie
 
 @Composable
-fun MovieItem(movie: Movie, onClickItem: (Int) -> Unit) {
+fun MovieItem(movie: Movie, onClickItem: (Movie) -> Unit) {
     Card(
         modifier = Modifier.padding(10.dp),
         onClick = {
-            onClickItem(movie.id)
+            onClickItem(movie)
         },
         colors = CardDefaults.cardColors(
             containerColor = BlackCard,

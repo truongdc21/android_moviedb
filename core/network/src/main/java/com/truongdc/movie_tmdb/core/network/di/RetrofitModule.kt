@@ -1,11 +1,11 @@
 package com.truongdc.movie_tmdb.core.network.di
 
 import com.squareup.moshi.Moshi
-import com.truongdc.movie_tmdb.core.network.provider.RetrofitProvider
-import com.truongdc.movie_tmdb.core.common.constant.Constants
+import com.truongdc.movie_tmdb.core.network.BuildConfig
 import com.truongdc.movie_tmdb.core.network.MovieService
 import com.truongdc.movie_tmdb.core.network.provider.ApiServiceProvider
 import com.truongdc.movie_tmdb.core.network.provider.ConverterFactoryProvider
+import com.truongdc.movie_tmdb.core.network.provider.RetrofitProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,7 +19,7 @@ import retrofit2.Retrofit
 class RetrofitModule {
 
     @Provides
-    fun provideBaseApiUrl() = Constants.BASE_URL
+    fun provideBaseApiUrl() = BuildConfig.BASE_API_URL
 
     @Provides
     fun provideMoshiConverterFactory(moshi: Moshi): Converter.Factory =

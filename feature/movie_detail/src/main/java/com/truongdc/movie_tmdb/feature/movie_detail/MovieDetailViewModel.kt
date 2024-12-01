@@ -4,9 +4,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.truongdc.movie_tmdb.core.data.repository.MovieRepository
 import com.truongdc.movie_tmdb.core.model.Movie
-import com.truongdc.movie_tmdb.core.navigation.AppDestination
 import com.truongdc.movie_tmdb.core.state.UiStateDelegateImpl
 import com.truongdc.movie_tmdb.core.viewmodel.UiStateViewModel
+import com.truongdc.movie_tmdb.feature.movie_detail.navigation.MovieDetailRouter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,7 +22,7 @@ class MovieDetailViewModel @Inject constructor(
 ) {
     init {
         asyncUpdateUiState(viewModelScope) { state ->
-            state.copy(movieId = AppDestination.MovieDetail.getMovieId(stateHandle))
+            state.copy(movieId = MovieDetailRouter.getMovie(stateHandle)?.id.toString())
         }
         if (uiState.movieId.isNotBlank()) {
             requestMovie(uiState.movieId.toInt())
@@ -40,7 +40,7 @@ class MovieDetailViewModel @Inject constructor(
 
     private fun requestMovie(movieId: Int) {
         launchTaskSync(isLoading = true, onRequest = {
-            movieRepository.getDetailMovies(movieId)
+            movieRepository.fetchDetailMovies(movieId)
         }, onSuccess = { movie ->
             asyncUpdateUiState(viewModelScope) { state -> state.copy(movie = movie) }
         })

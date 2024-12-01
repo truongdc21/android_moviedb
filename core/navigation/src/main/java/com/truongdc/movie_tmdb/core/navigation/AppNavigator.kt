@@ -10,62 +10,112 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.channels.Channel
 import javax.inject.Inject
 
+/**
+ * Provides navigation capabilities and UI-related actions for the application.
+ *
+ * This interface acts as a central point for managing navigation within the app,
+ * including navigating between screens, displaying toasts and snackbars,
+ * showing dialogs, and handling navigation results.
+ *
+ * It encapsulates the navigation logic and provides a consistent way to interact
+ * with the navigation system from different parts of the application.
+ *
+ * **Key functionalities:**
+ * - Navigating to different screens using routes.
+ * - Displaying toasts and snackbars for user feedback.
+ * - Showing dialogs for settings, force updates, maintenance mode, and logout.
+ * - Handling navigation results using a shared flow.
+ * - Observing the current navigation stack and destination changes.
+ */
 interface AppNavigator {
 
+    /**
+     * Provides access to the navigation controller,
+     */
     val navController: NavHostController
 
+    /**
+     * A channel for sending navigation intents to the navigator.
+     */
     val navigationChannel: Channel<NavigationIntent>
 
+    /**
+     * Initializes the navigation controller.
+     */
     fun initNav(navController: NavHostController)
 
-    fun showToast(
+    /**
+     * Display a toast message.
+     */
+    fun displayToastMessage(
         message: String,
         duration: Int = Toast.LENGTH_SHORT,
     )
 
-    fun showSnackBar(
+    /**
+     * Display a snackbar message with optional action.
+     */
+    fun displaySnackBar(
         message: String,
         actionLabel: String? = null,
         withDismissAction: Boolean = false,
         duration: Int,
     )
 
-    fun showSettingDialog(
-        isShowDialog: Boolean,
+    /**
+     * Toggle a dialog for settings.
+     */
+    fun toggleSettingDialog(
+        isVisible: Boolean,
     )
 
-    fun navigateTo(
-        route: String,
-        popUpToRoute: String? = null,
-        isInclusive: Boolean = false,
+    /**
+     * Navigates to a specific route.
+     */
+    fun <T : Any> navigateTo(
+        route: T,
+        popUpToRoute: Any? = null,
+        inclusive: Boolean = false,
         isSingleTop: Boolean = false,
     )
 
+    /**
+     * Navigates back to the previous screen.
+     */
     fun navigateBack(
-        route: String? = null,
+        route: Any? = null,
         inclusive: Boolean = false,
     )
 
-    fun navigateBackWithResult(
+    /**
+     * Navigates back to the previous screen with a result.
+     */
+    fun <R, T : Any> navigateBackWithResult(
         key: String,
-        result: Any?,
-        route: String?,
+        result: R,
+        route: T? = null,
         inclusive: Boolean = false,
     )
 
-    fun currentRoute(): String?
-
-    fun currentArguments(): Map<String, Any?>?
-
+    /**
+     * Observes the current navigation stack and logs it for debugging purposes.
+     */
     fun observerCurrentStack(coroutineScope: CoroutineScope)
 
+    /**
+     * Observes changes in the current destination and logs them for debugging purposes.
+     */
     fun observeDestinationChanges()
 
 }
 
+/**
+ * Implementation of [AppNavigator] that handles navigation using Jetpack Navigation.
+ */
 class AppNavigatorImpl @Inject constructor() : AppNavigator {
 
     private var _navController: NavHostController? = null
+
 
     override val navController: NavHostController
         get() = _navController
@@ -80,20 +130,20 @@ class AppNavigatorImpl @Inject constructor() : AppNavigator {
         _navController = navController
     }
 
-    override fun showToast(message: String, duration: Int) {
+    override fun displayToastMessage(message: String, duration: Int) {
         navigationChannel.trySend(
-            NavigationIntent.ShowToast(message, duration)
+            NavigationIntent.DisplayToast(message, duration)
         )
     }
 
-    override fun showSnackBar(
+    override fun displaySnackBar(
         message: String,
         actionLabel: String?,
         withDismissAction: Boolean,
         duration: Int,
     ) {
         navigationChannel.trySend(
-            NavigationIntent.ShowSnackBar(
+            NavigationIntent.DisplaySnackBar(
                 message,
                 actionLabel,
                 withDismissAction,
@@ -101,55 +151,42 @@ class AppNavigatorImpl @Inject constructor() : AppNavigator {
         )
     }
 
-    override fun showSettingDialog(isShowDialog: Boolean) {
+    override fun toggleSettingDialog(isVisible: Boolean) {
         navigationChannel.trySend(
-            NavigationIntent.ShowSettingDialog(isShowDialog)
+            NavigationIntent.ToggleSettingsDialog(isVisible)
         )
     }
 
-    override fun navigateTo(
-        route: String,
-        popUpToRoute: String?,
-        isInclusive: Boolean,
+    override fun <T : Any> navigateTo(
+        route: T,
+        popUpToRoute: Any?,
+        inclusive: Boolean,
         isSingleTop: Boolean,
     ) {
         navController.navigate(route) {
             launchSingleTop = isSingleTop
             popUpToRoute?.let { popUpToRoute ->
-                popUpTo(popUpToRoute) { inclusive = isInclusive }
+                popUpTo(popUpToRoute) { this.inclusive = inclusive }
             }
         }
     }
 
-    override fun navigateBack(
-        route: String?,
-        inclusive: Boolean,
-    ) {
+    override fun navigateBack(route: Any?, inclusive: Boolean) {
         route?.let {
             navController.popBackStack(it, inclusive)
         } ?: navController.popBackStack()
     }
 
-    override fun navigateBackWithResult(
+    override fun <R, T : Any> navigateBackWithResult(
         key: String,
-        result: Any?,
-        route: String?,
+        result: R,
+        route: T?,
         inclusive: Boolean,
     ) {
         navController.previousBackStackEntry?.savedStateHandle?.set(key, result)
         route?.let {
             navController.popBackStack(it, inclusive)
         } ?: navController.popBackStack()
-    }
-
-    override fun currentRoute(): String? {
-        return navController.currentBackStackEntry?.destination?.route
-    }
-
-    override fun currentArguments(): Map<String, Any?>? {
-        return navController.currentBackStackEntry?.arguments?.let { args ->
-            args.keySet().associateWith { args.get(it) }
-        }
     }
 
     @SuppressLint("RestrictedApi")
@@ -171,6 +208,8 @@ class AppNavigatorImpl @Inject constructor() : AppNavigator {
     }
 
     private fun logNavigation(message: String) {
-        Log.d("[AppNavigator]", message)
+        if (BuildConfig.DEBUG) {
+            Log.d("[AppNavigator]", message)
+        }
     }
 }
