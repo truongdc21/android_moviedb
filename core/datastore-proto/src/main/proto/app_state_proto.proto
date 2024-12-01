@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option java_package = "com.truongdc.movie_tmdb.core.datastore";
+option java_multiple_files = true;
+
+message AppStateProto {
+  string themeBrand = 1;
+  string darkThemeConfig = 2;
+  string useDynamicColor = 3;
+  string language = 4;
+}

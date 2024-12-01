@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Android Base</string>
+    <string name="language">Tiếng việt</string>
+    <string name="en">Tiếng anh</string>
+    <string name="vi">Tiếng việt</string>
+    <string name="ja">Tiếng Nhật</string>
+    <string name="movie_app">Ứng dụng phim</string>
+    <string name="ratting">Đánh giá:</string>
+    <string name="total_reviews">Tổng số đánh giá</string>
+    <string name="retry">Thử lại</string>
+    <string name="fetch_data_from_server">Đang lấy dữ liệu từ máy chủ</string>
+    <string name="settings">Cài đặt</string>
+    <string name="languages">Ngôn ngữ</string>
+    <string name="theme">Chủ đề</string>
+    <string name="default_srt">Mặc định</string>
+    <string name="use_dynamic_color">Sử dụng màu động</string>
+    <string name="yes">Có</string>
+    <string name="no">Không</string>
+    <string name="dark_mode_preference">Tùy chọn chế độ tối</string>
+    <string name="system_default">Mặc định hệ thống</string>
+    <string name="light">Sáng</string>
+    <string name="dark">Tối</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="ok">OK</string>
+    <string name="welcome_back">Chào mừng trở lại!</string>
+    <string name="login_to_continue">Đăng nhập để tiếp tục</string>
+    <string name="forget_password">Quên mật khẩu?</string>
+    <string name="login">Đăng nhập</string>
+    <string name="register">Đăng ký</string>
+    <string name="mail_id">Email</string>
+    <string name="fullname">Họ và tên</string>
+    <string name="password">Mật khẩu</string>
+    <string name="create_account">Tạo tài khoản</string>
+    <string name="register_account_to_login">Đăng ký tài khoản để đăng nhập</string>
+    <string name="login_success">Đăng nhập thành công</string>
+    <string name="logout_success">Đăng xuất thành công</string>
+    <string name="android">Android</string>
+    <string name="login_failed_please_try_again">Đăng nhập thất bại, vui lòng thử lại!</string>
+    <string name="register_success">Đăng ký thành công</string>
+    <string name="register_failed_please_try_again">Đăng ký thất bại, vui lòng thử lại!</string>
+    <string name="welcome_to_movie_app">Chào mừng đến với ứng dụng phim!</string>
+</resources>

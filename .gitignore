@@ -1,5 +1,3 @@
-# Created by .ignore support plugin (hsz.mobi)
-
 # Built application files
 *.apk
 *.ap_
@@ -14,11 +12,22 @@
 bin/
 gen/
 out/
+build/
+generated/
+
+# Windows thumbnail db
 .DS_Store
+
+# Eclipse project files
+.classpath
+.project
 
 # Gradle files
 .gradle/
 /build
+
+# Gradle cache
+.gradle
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -47,3 +56,9 @@ google-services.json
 
 # Keystore
 config/release.keystore
+
+# Sandbox stuff
+_sandbox
+
+# Kotlin
+.kotlin

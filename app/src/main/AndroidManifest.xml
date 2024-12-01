@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".MyApplication"
+        android:name=".MovieApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,7 +14,7 @@
         android:localeConfig="@xml/locales_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MovieDb"
+        android:theme="@style/Theme.MovieTMDB"
         tools:targetApi="tiramisu">
         <service
             android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
@@ -29,17 +29,13 @@
             android:name=".MainActivity"
             android:configChanges="layoutDirection|locale"
             android:exported="true"
-            android:theme="@style/Theme.MovieDB.Splash">
+            android:theme="@style/Theme.MovieTMDB.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.screens.movie_detail.MovieDetailActivity"
-            android:exported="false"
-            android:theme="@style/Theme.XML" />
     </application>
 
 </manifest>
