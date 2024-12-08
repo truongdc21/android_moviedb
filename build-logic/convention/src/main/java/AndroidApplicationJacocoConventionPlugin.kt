@@ -1,6 +1,6 @@
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
-import com.truongdc.movie_tmdb.convention.configureJacoco
+import com.truongdc.movie.convention.configureJacoco
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getByType

@@ -45,6 +45,12 @@ captures/
 *.iml
 .idea/*
 
+# Keep the code styles.
+!/.idea/codeStyles
+/.idea/codeStyles/*
+!/.idea/codeStyles/Project.xml
+!/.idea/codeStyles/codeStyleConfig.xml
+
 # Keystore files
 secret/
 
@@ -62,4 +68,3 @@ _sandbox
 
 # Kotlin
 .kotlin
-/.idea/

@@ -1,4 +1,4 @@
-import com.truongdc.movie_tmdb.convention.configureKotlinJvm
+import com.truongdc.movie.convention.configureKotlinJvm
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies

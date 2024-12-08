@@ -1,5 +1,5 @@
 import com.android.build.gradle.LibraryExtension
-import com.truongdc.movie_tmdb.convention.configureAndroidCompose
+import com.truongdc.movie.convention.configureAndroidCompose
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply

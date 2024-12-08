@@ -1,43 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+    Designed and developed by 2024 truongdc21 (Dang Chi Truong)
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
 <resources>
-    <string name="app_name">Android Base</string>
-    <string name="language">日本語</string>
-    <string name="en">英語</string>
-    <string name="vi">ベトナム語</string>
-    <string name="ja">日本語</string>
-    <string name="movie_app">映画アプリ</string>
-    <string name="ratting">評価:</string>
-    <string name="total_reviews">総レビュー数</string>
-    <string name="retry">再試行</string>
-    <string name="fetch_data_from_server">サーバーからデータを取得しています</string>
-    <string name="settings">設定</string>
-    <string name="languages">言語</string>
-    <string name="theme">テーマ</string>
-    <string name="default_srt">デフォルト</string>
-    <string name="use_dynamic_color">動的カラーを使用</string>
-    <string name="yes">はい</string>
-    <string name="no">いいえ</string>
-    <string name="dark_mode_preference">ダークモード設定</string>
-    <string name="system_default">システムデフォルト</string>
-    <string name="light">ライト</string>
-    <string name="dark">ダーク</string>
-    <string name="logout">ログアウト</string>
-    <string name="ok">OK</string>
-    <string name="welcome_back">お帰りなさい！</string>
-    <string name="login_to_continue">続行するにはログインしてください</string>
-    <string name="forget_password">パスワードを忘れましたか？</string>
-    <string name="login">ログイン</string>
-    <string name="register">登録</string>
-    <string name="mail_id">メールID</string>
-    <string name="fullname">フルネーム</string>
-    <string name="password">パスワード</string>
-    <string name="create_account">アカウント作成</string>
-    <string name="register_account_to_login">ログインするにはアカウントを登録</string>
-    <string name="login_success">ログイン成功</string>
-    <string name="logout_success">ログアウト成功</string>
-    <string name="android">アンドロイド</string>
-    <string name="login_failed_please_try_again">ログインに失敗しました。もう一度お試しください！</string>
-    <string name="register_success">登録に成功しました</string>
-    <string name="register_failed_please_try_again">登録に失敗しました。もう一度お試しください！</string>
-    <string name="welcome_to_movie_app">映画アプリへようこそ！</string>
 </resources>
