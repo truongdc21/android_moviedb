@@ -1,11 +1,11 @@
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.android.build.gradle.LibraryExtension
-import com.truongdc.movie_tmdb.convention.configureFlavors
-import com.truongdc.movie_tmdb.convention.configureGradleManagedDevices
-import com.truongdc.movie_tmdb.convention.configureKotlinAndroid
-import com.truongdc.movie_tmdb.convention.configurePrintApksTask
-import com.truongdc.movie_tmdb.convention.disableUnnecessaryAndroidTests
-import com.truongdc.movie_tmdb.convention.libs
+import com.truongdc.movie.convention.configureFlavors
+import com.truongdc.movie.convention.configureGradleManagedDevices
+import com.truongdc.movie.convention.configureKotlinAndroid
+import com.truongdc.movie.convention.configurePrintApksTask
+import com.truongdc.movie.convention.disableUnnecessaryAndroidTests
+import com.truongdc.movie.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure

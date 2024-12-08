@@ -1,5 +1,5 @@
 import com.android.build.api.dsl.ApplicationExtension
-import com.truongdc.movie_tmdb.convention.configureFlavors
+import com.truongdc.movie.convention.configureFlavors
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure

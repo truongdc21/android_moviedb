@@ -4,7 +4,7 @@ plugins {
     `kotlin-dsl`
 }
 
-group = "com.truongdc.movie_tmdb.buildlogic"
+group = "com.truongdc.movie.buildlogic"
 
 // Configure the build-logic plugins to target JDK 17
 // This matches the JDK used to build the project, and is not related to what is running on device.
@@ -28,6 +28,7 @@ dependencies {
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
     compileOnly(libs.room.gradlePlugin)
+    compileOnly(libs.spotless.gradlePlugin)
     implementation(libs.truth)
 }
 
@@ -95,6 +96,10 @@ gradlePlugin {
         register("jvmLibrary") {
             id = "movie_tmdb.jvm.library"
             implementationClass = "JvmLibraryConventionPlugin"
+        }
+        register("spotless") {
+            id = "movie_tmdb.spotless"
+            implementationClass = "SpotlessConventionPlugin"
         }
     }
 }

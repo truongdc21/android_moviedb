@@ -1,6 +1,6 @@
 import com.android.build.gradle.TestExtension
-import com.truongdc.movie_tmdb.convention.configureGradleManagedDevices
-import com.truongdc.movie_tmdb.convention.configureKotlinAndroid
+import com.truongdc.movie.convention.configureGradleManagedDevices
+import com.truongdc.movie.convention.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure

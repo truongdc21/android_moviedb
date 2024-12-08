@@ -1,10 +1,10 @@
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.gradle.BaseExtension
-import com.truongdc.movie_tmdb.convention.configureBadgingTasks
-import com.truongdc.movie_tmdb.convention.configureGradleManagedDevices
-import com.truongdc.movie_tmdb.convention.configureKotlinAndroid
-import com.truongdc.movie_tmdb.convention.configurePrintApksTask
+import com.truongdc.movie.convention.configureBadgingTasks
+import com.truongdc.movie.convention.configureGradleManagedDevices
+import com.truongdc.movie.convention.configureKotlinAndroid
+import com.truongdc.movie.convention.configurePrintApksTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure

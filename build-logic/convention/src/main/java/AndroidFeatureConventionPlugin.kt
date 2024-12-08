@@ -1,6 +1,6 @@
 import com.android.build.gradle.LibraryExtension
-import com.truongdc.movie_tmdb.convention.configureGradleManagedDevices
-import com.truongdc.movie_tmdb.convention.libs
+import com.truongdc.movie.convention.configureGradleManagedDevices
+import com.truongdc.movie.convention.libs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
