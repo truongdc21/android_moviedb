@@ -10,6 +10,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -22,17 +23,23 @@ import com.truongdc.movie_tmdb.core.designsystem.theme.MovieTMDBTheme
 fun PrimaryTextField(
     value: String,
     onValueChange: (String) -> Unit,
-    textPlaceholder: String?,
+    textPlaceholder: String? = null,
     isPassWord: Boolean = false,
     maxLines: Int = 1,
+    readOnly: Boolean = false,
     paddingValues: PaddingValues = PaddingValues(),
+    trailingIcon: @Composable (() -> Unit)? = null,
+    primaryColor: Color? = null,
+    onPrimaryColor: Color? = null,
     @SuppressLint("ModifierParameter") modifier: Modifier? = null,
 ) {
     TextField(
         modifier = modifier ?: Modifier
             .fillMaxWidth()
             .padding(paddingValues),
-        value = value, onValueChange = onValueChange,
+        value = value,
+        readOnly = readOnly,
+        onValueChange = onValueChange,
         textStyle = AppTheme.styles.bodyLarge,
         placeholder = {
             textPlaceholder?.let {
@@ -45,31 +52,42 @@ fun PrimaryTextField(
         },
         maxLines = maxLines,
         colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = AppTheme.colors.primary,
-            focusedContainerColor = AppTheme.colors.primary,
-            unfocusedIndicatorColor = AppTheme.colors.onPrimary,
-            focusedIndicatorColor = AppTheme.colors.onPrimary,
-            disabledIndicatorColor = AppTheme.colors.onPrimary,
-            focusedTextColor = AppTheme.colors.onPrimary,
-            unfocusedTextColor = AppTheme.colors.onPrimary,
-            cursorColor = AppTheme.colors.onPrimary,
+            unfocusedContainerColor = primaryColor ?: AppTheme.colors.primary,
+            focusedContainerColor = primaryColor ?: AppTheme.colors.primary,
+            unfocusedIndicatorColor = onPrimaryColor ?: AppTheme.colors.onPrimary,
+            focusedIndicatorColor = onPrimaryColor ?: AppTheme.colors.onPrimary,
+            disabledIndicatorColor = onPrimaryColor ?: AppTheme.colors.onPrimary,
+            focusedTextColor = onPrimaryColor ?: AppTheme.colors.onPrimary,
+            unfocusedTextColor = onPrimaryColor ?: AppTheme.colors.onPrimary,
+            cursorColor = onPrimaryColor ?: AppTheme.colors.onPrimary,
         ),
         visualTransformation = if (isPassWord) PasswordVisualTransformation() else VisualTransformation.None,
         keyboardOptions = KeyboardOptions.Default.copy(
             imeAction = ImeAction.Done
         ),
+        trailingIcon = trailingIcon,
     )
 }
 
 @Preview
 @Composable
 private fun Preview() {
-    MovieTMDBTheme(windowSizeClass = rememberWindowSizeClass()) {
+    MovieTMDBTheme(
+        windowSizeClass = rememberWindowSizeClass(),
+        androidTheme = true,
+        darkTheme = false,
+    ) {
         PrimaryTextField(
             value = "Input message",
             onValueChange = {},
-            textPlaceholder = ""
+            textPlaceholder = "",
+            isPassWord = false,
+            maxLines = 1,
+            readOnly = false,
+            paddingValues = PaddingValues(),
+            trailingIcon = null,
+            primaryColor = AppTheme.colors.surfaceContainer,
+            onPrimaryColor = AppTheme.colors.onSurfaceVariant
         )
     }
 }
-

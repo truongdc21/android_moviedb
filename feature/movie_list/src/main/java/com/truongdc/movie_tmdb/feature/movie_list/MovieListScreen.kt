@@ -9,8 +9,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -32,6 +30,7 @@ import com.truongdc.movie_tmdb.core.designsystem.components.ErrorMessage
 import com.truongdc.movie_tmdb.core.designsystem.components.LoadingNextPageItem
 import com.truongdc.movie_tmdb.core.designsystem.components.PageLoader
 import com.truongdc.movie_tmdb.core.designsystem.dimens.Orientation
+import com.truongdc.movie_tmdb.core.designsystem.icons.AppIcons
 import com.truongdc.movie_tmdb.core.designsystem.theme.AppTheme
 import com.truongdc.movie_tmdb.core.model.Movie
 import com.truongdc.movie_tmdb.core.ui.UiStateContent
@@ -58,7 +57,7 @@ fun MovieListScreen(
                 if (AppTheme.orientation == Orientation.Landscape) {
                     FloatingActionButton(
                         onClick = { onShowSettingDialog.invoke() },
-                        content = { Icon(Icons.Filled.Settings, contentDescription = null) }
+                        content = { Icon(AppIcons.Settings, contentDescription = null) }
                     )
                 }
             }
@@ -175,7 +174,7 @@ private fun MovieTopBar(showSetting: () -> Unit) {
         },
         actions = {
             Icon(
-                Icons.Filled.Settings,
+                AppIcons.Settings,
                 contentDescription = null,
                 tint = AppTheme.colors.onPrimary,
                 modifier = Modifier

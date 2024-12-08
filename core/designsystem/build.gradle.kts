@@ -13,6 +13,7 @@ android {
 }
 
 dependencies {
+    lintPublish(projects.lint)
     api(libs.androidx.appcompat)
     api(libs.androidx.compose.foundation)
     api(libs.androidx.compose.foundation.layout)
