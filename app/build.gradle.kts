@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.movieTMDB.android.application.flavors)
     alias(libs.plugins.movieTMDB.android.application.jacoco)
     alias(libs.plugins.movieTMDB.hilt)
+    alias(libs.plugins.movieTMDB.spotless)
     alias(libs.plugins.baselineprofile)
     alias(libs.plugins.roborazzi)
     alias(libs.plugins.kotlin.serialization)

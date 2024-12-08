@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.movieTMDB.android.library)
     alias(libs.plugins.movieTMDB.android.library.compose)
     alias(libs.plugins.movieTMDB.android.library.jacoco)
+    alias(libs.plugins.movieTMDB.spotless)
 }
 
 android {

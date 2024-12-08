@@ -12,7 +12,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.truongdc.movie_tmdb.R
+import com.truongdc.movie_tmdb.core.designsystem.R.string
 import com.truongdc.movie_tmdb.core.navigation.AppNavigator
 import com.truongdc.movie_tmdb.core.navigation.HandleNavigationIntents
 import com.truongdc.movie_tmdb.core.ui.UiStateContent
@@ -49,7 +49,7 @@ fun MovieTMDBApp(
         if (uiState.isShowSettingDialog) {
             SettingsDialog(
                 onLogout = {
-                    viewModel.logoutAccount()
+                    viewModel.logout()
                 },
                 onDismiss = {
                     viewModel.toggleSettingDialog(false)
@@ -75,7 +75,7 @@ fun MovieTMDBApp(
         if (!hasLaunched.value) {
             LaunchedEffect(Unit) {
                 navigator.displaySnackBar(
-                    message = context.getString(R.string.welcome_to_movie_app),
+                    message = context.getString(string.welcome_to_movie_app),
                     withDismissAction = true,
                     duration = 0,
                 )

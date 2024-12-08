@@ -22,10 +22,9 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,6 +41,7 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.core.os.LocaleListCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.truongdc.movie_tmdb.core.designsystem.R.string
+import com.truongdc.movie_tmdb.core.designsystem.components.PrimaryTextField
 import com.truongdc.movie_tmdb.core.designsystem.extensions.getDisplayName
 import com.truongdc.movie_tmdb.core.designsystem.theme.AppTheme
 import com.truongdc.movie_tmdb.core.designsystem.theme.supportsDynamicTheming
@@ -223,19 +223,19 @@ private fun SettingDialogSelectLanguage(
         expanded = expanded,
         onExpandedChange = { expanded = !expanded }
     ) {
-        TextField(
-            modifier = Modifier.menuAnchor(),
-            value = stringResource(id = string.language),
+        PrimaryTextField(
             onValueChange = {},
+            modifier = Modifier.menuAnchor(
+                MenuAnchorType.PrimaryNotEditable,
+                true
+            ),
+            value = stringResource(id = string.language),
             readOnly = true,
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
             },
-            colors = TextFieldDefaults.colors(
-                focusedIndicatorColor = AppTheme.colors.onPrimary,
-                unfocusedIndicatorColor = AppTheme.colors.onPrimary,
-                disabledIndicatorColor = AppTheme.colors.onPrimary,
-            ),
+            primaryColor = AppTheme.colors.surfaceContainer,
+            onPrimaryColor =  AppTheme.colors.onSurfaceVariant
         )
 
         ExposedDropdownMenu(expanded = expanded, onDismissRequest = {

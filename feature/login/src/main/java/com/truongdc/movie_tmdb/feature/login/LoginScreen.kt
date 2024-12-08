@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -34,6 +32,7 @@ import com.truongdc.movie_tmdb.core.designsystem.R.string
 import com.truongdc.movie_tmdb.core.designsystem.components.ObserverKeyBoard
 import com.truongdc.movie_tmdb.core.designsystem.components.PrimaryButton
 import com.truongdc.movie_tmdb.core.designsystem.components.PrimaryTextField
+import com.truongdc.movie_tmdb.core.designsystem.icons.AppIcons
 import com.truongdc.movie_tmdb.core.designsystem.theme.AppTheme
 import com.truongdc.movie_tmdb.core.designsystem.theme.MovieTMDBTheme
 import com.truongdc.movie_tmdb.core.ui.UiStateContent
@@ -96,7 +95,7 @@ private fun LoginContent(
             if (AppTheme.orientation.isLandscape())
                 FloatingActionButton(
                     onClick = { onNavigateRegister() },
-                    content = { Icon(Icons.Filled.Add, contentDescription = null) }
+                    content = { Icon(AppIcons.Add, contentDescription = null) }
                 )
         }
     ) {

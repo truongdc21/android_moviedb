@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.movieTMDB.android.library)
+    alias(libs.plugins.movieTMDB.spotless)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.ksp)

@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.movieTMDB.android.library.compose)
     alias(libs.plugins.movieTMDB.android.library.jacoco)
     alias(libs.plugins.movieTMDB.hilt)
+    alias(libs.plugins.movieTMDB.spotless)
     alias(libs.plugins.kotlin.serialization)
 }
 

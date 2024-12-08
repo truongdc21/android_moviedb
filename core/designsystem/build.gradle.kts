@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.movieTMDB.android.library)
     alias(libs.plugins.movieTMDB.android.library.compose)
     alias(libs.plugins.movieTMDB.android.library.jacoco)
+    alias(libs.plugins.movieTMDB.spotless)
     alias(libs.plugins.roborazzi)
 }
 
@@ -13,6 +14,7 @@ android {
 }
 
 dependencies {
+    lintPublish(projects.lint)
     api(libs.androidx.appcompat)
     api(libs.androidx.compose.foundation)
     api(libs.androidx.compose.foundation.layout)
