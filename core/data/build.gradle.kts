@@ -30,4 +30,7 @@ dependencies {
     implementation(projects.core.network)
     implementation(libs.paging.runtime)
     implementation(libs.paging.compose)
+
+    // testing
+    testImplementation(libs.kotlinx.coroutines.test)
 }

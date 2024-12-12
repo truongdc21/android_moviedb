@@ -74,15 +74,8 @@ class RegisterViewModel @Inject constructor(
 
     fun onSubmitRegister(user: User) {
         viewModelScope.launch {
-            try {
-                showLoading()
-                mainRepository.saveUser(user)
-                sendEvent(Event.RegisterSuccess)
-                hideLoading()
-            } catch (e: Exception) {
-                onSendError(e)
-                hideLoading()
-            }
+            mainRepository.saveUser(user)
+            sendEvent(Event.RegisterSuccess)
         }
     }
 }

@@ -56,7 +56,6 @@ class MovieListViewModel @Inject constructor(
 
     private fun requestMovie() {
         launchTaskSync(onRequest = {
-            internalState
             movieRepository.fetchMovies()
         }, onSuccess = { mFlowPagingMovie ->
             asyncUpdateInternalState { state -> state.copy(flowPagingMovie = mFlowPagingMovie) }

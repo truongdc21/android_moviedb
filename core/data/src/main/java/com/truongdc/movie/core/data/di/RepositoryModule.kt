@@ -20,9 +20,9 @@ import com.truongdc.movie.core.data.repository.MainRepository
 import com.truongdc.movie.core.data.repository.MovieRepository
 import com.truongdc.movie.core.data.repository.impl.MainRepositoryImpl
 import com.truongdc.movie.core.data.repository.impl.MovieRepositoryImpl
-import com.truongdc.movie.core.datastore.AppStateDataStore
-import com.truongdc.movie.core.datastore.PreferencesDataStore
-import com.truongdc.movie.core.datastore.UserDataStore
+import com.truongdc.movie.core.datastore.AppStateDataSource
+import com.truongdc.movie.core.datastore.PreferencesDataSource
+import com.truongdc.movie.core.datastore.UserDataSource
 import com.truongdc.movie.core.network.source.MovieNetworkDataSource
 import dagger.Module
 import dagger.Provides
@@ -47,9 +47,9 @@ class RepositoryModule {
     @Provides
     @Singleton
     fun providerMainRepository(
-        userDataStore: UserDataStore,
-        appStateDataStore: AppStateDataStore,
-        preferencesDataStore: PreferencesDataStore,
+        userDataStore: UserDataSource,
+        appStateDataStore: AppStateDataSource,
+        preferencesDataStore: PreferencesDataSource,
     ): MainRepository {
         return MainRepositoryImpl(
             userDataStore,

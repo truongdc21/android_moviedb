@@ -16,7 +16,7 @@
 package com.truongdc.movie.core.network
 
 import com.truongdc.movie.core.model.BaseResponse
-import com.truongdc.movie.core.model.Movie
+import com.truongdc.movie.core.network.model.NetworkMovie
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -27,11 +27,11 @@ interface MovieService {
     suspend fun fetchTopRateMovies(
         @Query("api_key") apiKey: String?,
         @Query("page") page: Int = 1,
-    ): BaseResponse<List<Movie>>
+    ): BaseResponse<List<NetworkMovie>>
 
     @GET("movie/{movieId}")
     suspend fun fetchMovieDetails(
         @Path("movieId") movieId: Int,
         @Query("api_key") apiKey: String?,
-    ): Movie
+    ): NetworkMovie
 }

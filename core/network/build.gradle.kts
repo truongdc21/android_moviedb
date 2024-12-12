@@ -17,10 +17,17 @@ plugins {
     alias(libs.plugins.movieTMDB.android.library)
     alias(libs.plugins.movieTMDB.android.library.jacoco)
     alias(libs.plugins.movieTMDB.hilt)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
     namespace = Configs.NAMESPACE_CORE_NETWORK
+    @Suppress("UnstableApiUsage")
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -31,4 +38,10 @@ dependencies {
     implementation(libs.timber)
     implementation(libs.chucker)
     implementation(libs.okhttp.logging)
+
+    // testing
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(projects.core.testing)
+    testImplementation(libs.okhttp.mockwebserver)
+    testImplementation(libs.androidx.arch.core.testing)
 }

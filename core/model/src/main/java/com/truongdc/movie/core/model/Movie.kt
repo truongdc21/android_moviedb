@@ -16,36 +16,18 @@
 package com.truongdc.movie.core.model
 
 import android.os.Parcelable
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
 @Parcelize
-@JsonClass(generateAdapter = true)
 @Serializable
 data class Movie(
-    @Json(name = "id")
-    var id: Int = -1,
-
-    @Json(name = "backdrop_path")
-    var backDropImage: String = "",
-
-    @Json(name = "overview")
-    var overView: String = "",
-
-    @Json(name = "vote_average")
-    var vote: Double = 0.0,
-
-    @Json(name = "vote_count")
-    var voteCount: Int = 0,
-
-    @Json(name = "title")
-    var title: String = "",
-
-    @Json(name = "poster_path")
-    var urlImage: String = "",
-
-    @Json(name = "original_title")
-    var originalTitle: String = "",
+    val id: Int,
+    val backDropImage: String,
+    val overView: String,
+    val vote: Double,
+    val voteCount: Int,
+    val title: String,
+    val urlImage: String,
+    val originalTitle: String,
 ) : Parcelable

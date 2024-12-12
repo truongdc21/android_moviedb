@@ -16,10 +16,10 @@
 package com.truongdc.movie.core.network.source
 
 import com.truongdc.movie.core.model.BaseResponse
-import com.truongdc.movie.core.model.Movie
+import com.truongdc.movie.core.network.model.NetworkMovie
 
 interface MovieNetworkDataSource {
-    suspend fun fetchMovies(pageNumber: Int): BaseResponse<List<Movie>>
+    suspend fun fetchMovies(pageNumber: Int): BaseResponse<List<NetworkMovie>>
 
-    suspend fun fetchMovieDetail(movieId: Int): Movie
+    suspend fun fetchMovieDetail(movieId: Int): NetworkMovie
 }

@@ -129,8 +129,14 @@ private fun Preview() {
     ) {
         MovieItem(
             movie = Movie(
-                title = "Name of movie",
-                overView = "overview",
+                id = 1,
+                backDropImage = "",
+                overView = "",
+                vote = 0.0,
+                voteCount = 0,
+                title = "Movie 1",
+                urlImage = "",
+                originalTitle = "",
             ),
         ) {}
     }

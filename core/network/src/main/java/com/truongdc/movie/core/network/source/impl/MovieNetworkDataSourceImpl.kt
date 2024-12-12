@@ -17,8 +17,8 @@ package com.truongdc.movie.core.network.source.impl
 
 import com.truongdc.movie.core.common.constant.Constants
 import com.truongdc.movie.core.model.BaseResponse
-import com.truongdc.movie.core.model.Movie
 import com.truongdc.movie.core.network.MovieService
+import com.truongdc.movie.core.network.model.NetworkMovie
 import com.truongdc.movie.core.network.source.MovieNetworkDataSource
 import javax.inject.Inject
 
@@ -26,11 +26,11 @@ class MovieNetworkDataSourceImpl @Inject constructor(
     private val movieService: MovieService,
 ) : MovieNetworkDataSource {
 
-    override suspend fun fetchMovies(pageNumber: Int): BaseResponse<List<Movie>> {
+    override suspend fun fetchMovies(pageNumber: Int): BaseResponse<List<NetworkMovie>> {
         return movieService.fetchTopRateMovies(apiKey = Constants.BASE_API_KEY, page = pageNumber)
     }
 
-    override suspend fun fetchMovieDetail(movieId: Int): Movie {
+    override suspend fun fetchMovieDetail(movieId: Int): NetworkMovie {
         return movieService.fetchMovieDetails(movieId = movieId, apiKey = Constants.BASE_API_KEY)
     }
 }

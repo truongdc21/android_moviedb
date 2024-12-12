@@ -19,7 +19,7 @@ import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerCollector
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.chuckerteam.chucker.api.RetentionManager
-import com.truongdc.movie.app.data.remote.interceptors.AuthInterceptor
+import com.truongdc.movie.core.network.interceptors.AuthInterceptor
 import com.truongdc.movie.core.network.interceptors.HeaderInterceptor
 import com.truongdc.movie.core.network.interceptors.TokenAuthenticator
 import okhttp3.OkHttpClient

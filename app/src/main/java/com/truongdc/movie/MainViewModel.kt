@@ -28,10 +28,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    userDataRepository: MainRepository,
+    mainRepository: MainRepository,
 ) : ViewModel() {
 
-    val uiState: StateFlow<MainActivityUiState> = userDataRepository.appState.map {
+    val uiState: StateFlow<MainActivityUiState> = mainRepository.appState.map {
         MainActivityUiState.Success(it)
     }.stateIn(
         scope = viewModelScope,

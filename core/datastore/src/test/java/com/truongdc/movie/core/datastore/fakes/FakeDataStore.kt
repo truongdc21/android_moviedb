@@ -13,19 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.truongdc.movie.core.datastore
+package com.truongdc.movie.core.datastore.fakes
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import androidx.datastore.core.DataStore
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+class FakeDataStore<T>(
+    private var default: T,
+) : DataStore<T> {
+
+    private val stateFlow = MutableStateFlow(default)
+
+    override val data: Flow<T> = stateFlow
+
+    override suspend fun updateData(transform: suspend (T) -> T): T {
+        val newData = transform(stateFlow.value)
+        stateFlow.value = newData
+        return newData
     }
 }

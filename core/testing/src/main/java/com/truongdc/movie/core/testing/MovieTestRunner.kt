@@ -13,19 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.truongdc.movie.core.network
+package com.truongdc.movie.core.testing
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import android.app.Application
+import android.content.Context
+import androidx.test.runner.AndroidJUnitRunner
+import dagger.hilt.android.testing.HiltTestApplication
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
+class MovieTestRunner : AndroidJUnitRunner() {
+    override fun newApplication(cl: ClassLoader, name: String, context: Context): Application =
+        super.newApplication(cl, HiltTestApplication::class.java.name, context)
 }

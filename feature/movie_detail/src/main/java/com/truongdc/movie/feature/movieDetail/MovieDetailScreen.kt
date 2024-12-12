@@ -99,7 +99,14 @@ private fun Preview() {
     MovieTMDBTheme {
         MovieDetailContent(
             movie = Movie(
+                id = 1,
+                backDropImage = "",
+                overView = "",
+                vote = 0.0,
+                voteCount = 0,
+                title = "Movie 1",
                 urlImage = "",
+                originalTitle = "",
             ),
         )
     }

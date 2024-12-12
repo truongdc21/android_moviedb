@@ -17,6 +17,7 @@ package com.truongdc.movie.core.network.di
 
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.truongdc.movie.core.network.interceptors.AuthInterceptor
 import com.truongdc.movie.core.network.interceptors.HeaderInterceptor
 import com.truongdc.movie.core.network.interceptors.TokenAuthenticator
 import com.truongdc.movie.core.network.provider.OkHttpClientProvider
@@ -37,7 +38,7 @@ class OkhttpClientModule {
         chuckerInterceptor: ChuckerInterceptor,
         httpLoggingInterceptor: HttpLoggingInterceptor,
         headerInterceptor: HeaderInterceptor,
-        authInterceptor: com.truongdc.movie.app.data.remote.interceptors.AuthInterceptor,
+        authInterceptor: AuthInterceptor,
         tokenAuthenticator: TokenAuthenticator,
     ): OkHttpClient {
         return OkHttpClientProvider.getOkHttpClientBuilder(
