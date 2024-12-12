@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.truongdc.movie.app.data.remote.interceptors
+package com.truongdc.movie.core.network.interceptors
 
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor

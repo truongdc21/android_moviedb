@@ -30,7 +30,7 @@ class DataSourceModule {
 
     @Provides
     @Singleton
-    fun providerMovieRemoteSource(movieService: MovieService): MovieNetworkDataSource {
+    fun providerMovieNetworkSource(movieService: MovieService): MovieNetworkDataSource {
         return MovieNetworkDataSourceImpl(movieService)
     }
 }

@@ -13,19 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.truongdc.movie.core.data
+package com.truongdc.movie.core.testing.data
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import com.truongdc.movie.core.model.Movie
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
-}
+val movieTestData: List<Movie> = listOf(
+    Movie(
+        id = 1,
+        backDropImage = "",
+        overView = "",
+        vote = 0.0,
+        voteCount = 0,
+        title = "Movie 1",
+        urlImage = "",
+        originalTitle = "",
+    ),
+    Movie(
+        id = 2,
+        backDropImage = "",
+        overView = "",
+        vote = 0.0,
+        voteCount = 0,
+        title = "Movie 2",
+        urlImage = "",
+        originalTitle = "",
+    ),
+)

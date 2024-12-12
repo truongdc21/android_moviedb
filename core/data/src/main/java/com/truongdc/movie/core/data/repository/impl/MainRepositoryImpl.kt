@@ -16,9 +16,9 @@
 package com.truongdc.movie.core.data.repository.impl
 
 import com.truongdc.movie.core.data.repository.MainRepository
-import com.truongdc.movie.core.datastore.AppStateDataStore
-import com.truongdc.movie.core.datastore.PreferencesDataStore
-import com.truongdc.movie.core.datastore.UserDataStore
+import com.truongdc.movie.core.datastore.AppStateDataSource
+import com.truongdc.movie.core.datastore.PreferencesDataSource
+import com.truongdc.movie.core.datastore.UserDataSource
 import com.truongdc.movie.core.model.AppState
 import com.truongdc.movie.core.model.DarkThemeConfig
 import com.truongdc.movie.core.model.Language
@@ -29,9 +29,9 @@ import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class MainRepositoryImpl @Inject constructor(
-    private val userDataStore: UserDataStore,
-    private val appStateDataStore: AppStateDataStore,
-    private val preferencesDataStore: PreferencesDataStore,
+    private val userDataStore: UserDataSource,
+    private val appStateDataStore: AppStateDataSource,
+    private val preferencesDataStore: PreferencesDataSource,
 ) : MainRepository {
 
     override val user: Flow<User>

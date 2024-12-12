@@ -15,31 +15,76 @@
  */
 package com.truongdc.movie.core.datastore.di
 
-import com.truongdc.movie.core.datastore.AppStateDataStore
-import com.truongdc.movie.core.datastore.AppStateDataStoreImpl
-import com.truongdc.movie.core.datastore.PreferencesDataStore
-import com.truongdc.movie.core.datastore.PreferencesDataStoreImpl
-import com.truongdc.movie.core.datastore.UserDataStore
-import com.truongdc.movie.core.datastore.UserDataStoreImpl
-import dagger.Binds
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.core.DataStoreFactory
+import androidx.datastore.dataStoreFile
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
+import com.truongdc.movie.core.common.di.ApplicationScope
+import com.truongdc.movie.core.common.di.annotations.IoDispatcher
+import com.truongdc.movie.core.datastore.AppStateProto
+import com.truongdc.movie.core.datastore.UserProto
+import com.truongdc.movie.core.datastore.serializes.AppStateSerialize
+import com.truongdc.movie.core.datastore.serializes.UserSerialize
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface DataStoreModule {
+object DataStoreModule {
 
-    @Binds
+    @Provides
     @Singleton
-    fun providerUserDatastore(impl: UserDataStoreImpl): UserDataStore
+    fun providePreferencesDataStore(
+        @ApplicationContext context: Context,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
+        @ApplicationScope scope: CoroutineScope,
+    ): DataStore<Preferences> {
+        return PreferenceDataStoreFactory.create(
+            corruptionHandler = null,
+            migrations = emptyList(),
+            scope = CoroutineScope(scope.coroutineContext + ioDispatcher),
+        ) {
+            context.dataStoreFile("preferences_data_store.preferences_pb")
+        }
+    }
 
-    @Binds
+    @Provides
     @Singleton
-    fun providesPreferencesDataStore(impl: PreferencesDataStoreImpl): PreferencesDataStore
+    fun provideUserDataStore(
+        @ApplicationContext context: Context,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
+        @ApplicationScope scope: CoroutineScope,
+        userSerialize: UserSerialize,
+    ): DataStore<UserProto> {
+        return DataStoreFactory.create(
+            serializer = userSerialize,
+            scope = CoroutineScope(scope.coroutineContext + ioDispatcher),
+        ) {
+            context.dataStoreFile("user_proto_data_store_pb")
+        }
+    }
 
-    @Binds
+    @Provides
     @Singleton
-    fun providesAppStateDataStore(impl: AppStateDataStoreImpl): AppStateDataStore
+    fun provideAppStateDataStore(
+        @ApplicationContext context: Context,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
+        @ApplicationScope scope: CoroutineScope,
+        appStateSerialize: AppStateSerialize,
+    ): DataStore<AppStateProto> {
+        return DataStoreFactory.create(
+            serializer = appStateSerialize,
+            scope = CoroutineScope(scope.coroutineContext + ioDispatcher),
+        ) {
+            context.dataStoreFile("app_state_proto_data_store_pb")
+        }
+    }
 }

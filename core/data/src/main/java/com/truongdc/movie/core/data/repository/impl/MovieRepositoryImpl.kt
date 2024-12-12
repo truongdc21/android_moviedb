@@ -22,6 +22,7 @@ import com.truongdc.movie.core.common.di.annotations.IoDispatcher
 import com.truongdc.movie.core.common.result.ExecuteResult
 import com.truongdc.movie.core.data.paging.MoviePagingSource
 import com.truongdc.movie.core.data.repository.MovieRepository
+import com.truongdc.movie.core.network.model.asExternalModel
 import com.truongdc.movie.core.network.source.MovieNetworkDataSource
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
@@ -40,6 +41,6 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun fetchDetailMovies(movieId: Int) = withResultContext {
-        movieNetWork.fetchMovieDetail(movieId)
+        movieNetWork.fetchMovieDetail(movieId).asExternalModel()
     }
 }

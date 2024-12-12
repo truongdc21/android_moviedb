@@ -13,19 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.truongdc.movie.feature.movieDetail
+package com.truongdc.movie.core.data.testdoubles
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import com.truongdc.movie.core.datastore.PreferencesDataSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+class TestPreferencesDataSource : PreferencesDataSource {
+
+    // In-memory storage to simulate PreferencesDataStore
+    private val isLogInFlow = MutableStateFlow(false)
+
+    override val isLogIn: Flow<Boolean> = isLogInFlow
+
+    override suspend fun setIsLogIn(isLogin: Boolean) {
+        isLogInFlow.value = isLogin
     }
 }

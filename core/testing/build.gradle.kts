@@ -13,19 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.truongdc.movie.feature.register
+plugins {
+    alias(libs.plugins.movieTMDB.android.library)
+    alias(libs.plugins.movieTMDB.hilt)
+}
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
+android {
+    namespace = Configs.NAMESPACE_CORE_TESTING
+}
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-class ExampleUnitTest {
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
+dependencies {
+    api(libs.kotlinx.coroutines.test)
+    api(projects.core.common)
+    api(projects.core.data)
+    api(projects.core.model)
+
+    implementation(libs.androidx.test.rules)
+    implementation(libs.hilt.android.testing)
+    implementation(libs.kotlinx.datetime)
+    implementation(libs.paging.runtime)
+    implementation(libs.paging.compose)
 }

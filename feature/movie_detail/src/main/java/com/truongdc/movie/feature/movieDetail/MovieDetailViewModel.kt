@@ -23,7 +23,6 @@ import com.truongdc.movie.core.state.UiStateDelegateImpl
 import com.truongdc.movie.core.viewmodel.UiStateViewModel
 import com.truongdc.movie.feature.movieDetail.navigation.MovieDetailRouter
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,29 +36,25 @@ class MovieDetailViewModel @Inject constructor(
 ) {
     init {
         asyncUpdateUiState(viewModelScope) { state ->
-            state.copy(movieId = MovieDetailRouter.getMovie(stateHandle)?.id.toString())
+            state.copy(movieId = MovieDetailRouter.getMovie(stateHandle)?.id ?: -1)
         }
-        if (uiState.movieId.isNotBlank()) {
-            requestMovie(uiState.movieId.toInt())
+        if (uiState.movieId != -1) {
+            requestMovie(uiState.movieId)
         }
     }
 
     data class UiState(
-        val movieId: String = "",
+        val movieId: Int = -1,
         val movie: Movie? = null,
     )
 
-    sealed interface Event {
-        data object BackToList : Event
-    }
+    sealed interface Event
 
-    private fun requestMovie(movieId: Int) {
+    fun requestMovie(movieId: Int) {
         launchTaskSync(isLoading = true, onRequest = {
             movieRepository.fetchDetailMovies(movieId)
         }, onSuccess = { movie ->
             asyncUpdateUiState(viewModelScope) { state -> state.copy(movie = movie) }
         })
     }
-
-    fun sendEvents(event: Event) = viewModelScope.launch { sendEvent(event) }
 }

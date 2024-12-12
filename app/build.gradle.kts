@@ -112,6 +112,7 @@ dependencies {
 
     testImplementation(libs.hilt.android.testing)
     testImplementation(libs.kotlin.test)
+    testImplementation(projects.core.testing)
 
     testDevelopImplementation(libs.robolectric)
     testDevelopImplementation(libs.roborazzi)
@@ -121,6 +122,7 @@ dependencies {
     androidTestImplementation(libs.androidx.navigation.testing)
     androidTestImplementation(libs.androidx.compose.ui.test)
     androidTestImplementation(libs.hilt.android.testing)
+    androidTestImplementation(projects.core.testing)
 }
 
 baselineProfile {
