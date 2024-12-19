@@ -56,7 +56,7 @@ class MainViewModelTest {
             themeBrand = ThemeBrand.DEFAULT,
             useDynamicColor = true,
             darkThemeConfig = DarkThemeConfig.FOLLOW_SYSTEM,
-            language = Language.EN
+            language = Language.EN,
         )
         repository.setThemeBrand(initialAppState.themeBrand)
         repository.setDynamicColorPreference(initialAppState.useDynamicColor)
@@ -66,7 +66,7 @@ class MainViewModelTest {
         assert(viewModel.uiState.first() is MainActivityUiState.Success)
         assertEquals(
             initialAppState,
-            (viewModel.uiState.first() as MainActivityUiState.Success).appState
+            (viewModel.uiState.first() as MainActivityUiState.Success).appState,
         )
     }
 }
